@@ -1,0 +1,30 @@
+#include<stdio.h>
+void prime();
+void main(){
+	prime();
+}
+void prime(){
+
+int num,j=2;
+	printf("enter the number :");
+	scanf("%d",&num);
+	for(int i=2;i<=num;i++){
+		int isprime=1;
+		if(i<=1){
+			isprime=0;
+		}
+		else{
+			while(j<=i/2){
+			if(i%j==0)	{
+				isprime=0;
+				break;
+			}
+			j++;
+			}
+		}
+		if(isprime){
+			printf("\n%d",i);
+		}
+	}
+}
+	
