@@ -1,0 +1,150 @@
+mysql> desc member;
++------------------+--------------+------+-----+---------+-------+
+| Field            | Type         | Null | Key | Default | Extra |
++------------------+--------------+------+-----+---------+-------+
+| member_id        | int          | NO   | PRI | NULL    |       |
+| member_name      | varchar(30)  | YES  |     | NULL    |       |
+| member_address   | varchar(50)  | YES  |     | NULL    |       |
+| acc_open_date    | date         | YES  |     | NULL    |       |
+| membership_type  | varchar(20)  | YES  |     | NULL    |       |
+| fee_paid         | int          | YES  |     | NULL    |       |
+| max_book_allowed | int          | YES  |     | NULL    |       |
+| penalty_amount   | decimal(7,2) | YES  |     | NULL    |       |
++------------------+--------------+------+-----+---------+-------+
+8 rows in set (0.01 sec)
+
+mysql> create table book(book_no int,book_name varchar(30),author_name varchar(30),cost decimal(7,2),category char(10));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc book;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| book_no     | int          | YES  |     | NULL    |       |
+| book_name   | varchar(30)  | YES  |     | NULL    |       |
+| author_name | varchar(30)  | YES  |     | NULL    |       |
+| cost        | decimal(7,2) | YES  |     | NULL    |       |
+| category    | char(10)     | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> create table issue(lib_issue_id int,book_no int,member_id int,issue_date date,return_date date);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql>
+mysql> create table book1 as(select*from book);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> drop table book1;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> alter table member
+    -> modify column member_name varchar(50);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc issue;
++--------------+------+------+-----+---------+-------+
+| Field        | Type | Null | Key | Default | Extra |
++--------------+------+------+-----+---------+-------+
+| lib_issue_id | int  | YES  |     | NULL    |       |
+| book_no      | int  | YES  |     | NULL    |       |
+| member_id    | int  | YES  |     | NULL    |       |
+| issue_date   | date | YES  |     | NULL    |       |
+| return_date  | date | YES  |     | NULL    |       |
++--------------+------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table issue
+    -> add column refernces char(50);
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc issue;
++--------------+----------+------+-----+---------+-------+
+| Field        | Type     | Null | Key | Default | Extra |
++--------------+----------+------+-----+---------+-------+
+| lib_issue_id | int      | YES  |     | NULL    |       |
+| book_no      | int      | YES  |     | NULL    |       |
+| member_id    | int      | YES  |     | NULL    |       |
+| issue_date   | date     | YES  |     | NULL    |       |
+| return_date  | date     | YES  |     | NULL    |       |
+| refernces    | char(50) | YES  |     | NULL    |       |
++--------------+----------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> delete from issue where column =refernces;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'column =refernces' at line 1
+mysql> alter table issue
+    -> drop column refernces;
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc issue;
++--------------+------+------+-----+---------+-------+
+| Field        | Type | Null | Key | Default | Extra |
++--------------+------+------+-----+---------+-------+
+| lib_issue_id | int  | YES  |     | NULL    |       |
+| book_no      | int  | YES  |     | NULL    |       |
+| member_id    | int  | YES  |     | NULL    |       |
+| issue_date   | date | YES  |     | NULL    |       |
+| return_date  | date | YES  |     | NULL    |       |
++--------------+------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table issue rename to lib_issue;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> decs member;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'decs member' at line 1
+mysql> desc member;
++------------------+--------------+------+-----+---------+-------+
+| Field            | Type         | Null | Key | Default | Extra |
++------------------+--------------+------+-----+---------+-------+
+| member_id        | int          | NO   | PRI | NULL    |       |
+| member_name      | varchar(50)  | YES  |     | NULL    |       |
+| member_address   | varchar(50)  | YES  |     | NULL    |       |
+| acc_open_date    | date         | YES  |     | NULL    |       |
+| membership_type  | varchar(20)  | YES  |     | NULL    |       |
+| fee_paid         | int          | YES  |     | NULL    |       |
+| max_book_allowed | int          | YES  |     | NULL    |       |
+| penalty_amount   | decimal(7,2) | YES  |     | NULL    |       |
++------------------+--------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> insert into member values(1,"vijeta badakh","pune","10-12-05","lifetime",25000,5,50);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into member values(2,"nikita badakh","pune","25-09-24","annual",1000,3);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into member values(2,"nikita badakh","pune","25-09-24","annual",1000,null);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into member values(2,"nikita badakh","pune","25-09-24","annual",1000,2);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into member values(2,"nikita badakh","solapur","20-12-05","annual",10000,5);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into member values(2,"nikita badakh","solapur","20-12-05","annual",10000,5,50);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into member values(3,"kirti badakh","kolhapur","20-8-05","half yearly",23000,8,40),
+    -> (4,"krutika jagadale","nashik","25-9-25","quarterly",22000,6,50),
+    -> (5,"vaishanavi pathare","mumbai","25-9-22","lifetime",2000,5,60),
+    -> (6,"manjiri chinade","delhi","25-8-22","lifetime",3000,5,60);
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> table member;
++-----------+--------------------+----------------+---------------+-----------------+----------+------------------+----------------+
+| member_id | member_name        | member_address | acc_open_date | membership_type | fee_paid | max_book_allowed | penalty_amount |
++-----------+--------------------+----------------+---------------+-----------------+----------+------------------+----------------+
+|         1 | vijeta badakh      | pune           | 2010-12-05    | lifetime        |    25000 |                5 |          50.00 |
+|         2 | nikita badakh      | solapur        | 2020-12-05    | annual          |    10000 |                5 |          50.00 |
+|         3 | kirti badakh       | kolhapur       | 2020-08-05    | half yearly     |    23000 |                8 |          40.00 |
+|         4 | krutika jagadale   | nashik         | 2025-09-25    | quarterly       |    22000 |                6 |          50.00 |
+|         5 | vaishanavi pathare | mumbai         | 2025-09-22    | lifetime        |     2000 |                5 |          60.00 |
+|         6 | manjiri chinade    | delhi          | 2025-08-22    | lifetime        |     3000 |                5 |          60.00 |
++-----------+--------------------+----------------+---------------+-----------------+----------+------------------+----------------+
+6 rows in set (0.00 sec)
+
+mysql>

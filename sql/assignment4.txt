@@ -1,0 +1,388 @@
+Enter password: ***********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 27
+Server version: 8.0.41 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use firstBit;
+Database changed
+mysql> select*from employees;
++-------------+------------+-----------+---------------+--------------+------------+--------+--------+------------+------------+---------------+
+| employee_id | first_name | last_name | email         | phone_number | hire_date  | job_id | salary | commission | manager_id | department_id |
++-------------+------------+-----------+---------------+--------------+------------+--------+--------+------------+------------+---------------+
+|         101 | vijeta     | badakh    | not available |    214354657 | 2025-09-15 |     10 |  30800 |          0 |          1 |           501 |
+|         102 | nikita     | badakh    | not available |    214354879 | 2025-09-26 |     20 |  23000 |          0 |          2 |           502 |
+|         103 | krutika    | NULL      | not available |         NULL | 2014-03-03 |   NULL |   NULL |          0 |       NULL |          NULL |
+|         104 | vaishanavi | NULL      | not available |         NULL | 2020-04-23 |   NULL |   NULL |          0 |       NULL |          NULL |
+|         105 | vijeta     | kale      | not available |     12436547 | 2023-06-22 |     30 |  35348 |          0 |          3 |           503 |
+|         106 | gaytri     | kharde    | not available |     12400547 | 2023-05-01 |     30 |  44000 |          0 |          4 |           504 |
+|         107 | sehal      | kharde    | not available |   1245567342 | 2014-05-01 |     40 |  25000 |          0 |          5 |           506 |
+|         108 | mansi      | gunjal    | not available |      1245435 | 2017-12-22 |     50 |  55000 |          0 |          6 |           507 |
+|         109 | swaleha    | shaik     | not available |      1245467 | 2015-06-21 |     50 |  30000 |          0 |          7 |           508 |
+|         110 | pratiksha  | raut      | not available |      1234536 | 2015-04-18 |      0 |  19000 |          0 |          8 |           509 |
+|         111 | pratiksha  | raut      | not available |     12534623 | 2017-04-18 |      0 |  44000 |          0 |          9 |           510 |
+|         112 | anamika    | sable     | not available |    234360987 | 2020-03-29 |      0 |  55000 |          0 |         10 |           511 |
+|         113 | kamini     | salunke   | not available |    987654333 | 2021-11-23 |      0 |  77000 |          0 |         11 |           512 |
++-------------+------------+-----------+---------------+--------------+------------+--------+--------+------------+------------+---------------+
+13 rows in set (0.01 sec)
+
+mysql> select first_name,last_name as "first Name","Last Name" from eployees;
+ERROR 1146 (42S02): Table 'firstbit.eployees' doesn't exist
+mysql> select first_name,last_name as "first Name","Last Name" from employees;
++------------+------------+-----------+
+| first_name | first Name | Last Name |
++------------+------------+-----------+
+| vijeta     | badakh     | Last Name |
+| nikita     | badakh     | Last Name |
+| krutika    | NULL       | Last Name |
+| vaishanavi | NULL       | Last Name |
+| vijeta     | kale       | Last Name |
+| gaytri     | kharde     | Last Name |
+| sehal      | kharde     | Last Name |
+| mansi      | gunjal     | Last Name |
+| swaleha    | shaik      | Last Name |
+| pratiksha  | raut       | Last Name |
+| pratiksha  | raut       | Last Name |
+| anamika    | sable      | Last Name |
+| kamini     | salunke    | Last Name |
++------------+------------+-----------+
+13 rows in set (0.00 sec)
+
+mysql> select first_nameas "first Name",last_name as "Last Name" from employees;
+ERROR 1054 (42S22): Unknown column 'first_nameas' in 'field list'
+mysql> select first_name "first Name",last_name as "Last Name" from employees;
++------------+-----------+
+| first Name | Last Name |
++------------+-----------+
+| vijeta     | badakh    |
+| nikita     | badakh    |
+| krutika    | NULL      |
+| vaishanavi | NULL      |
+| vijeta     | kale      |
+| gaytri     | kharde    |
+| sehal      | kharde    |
+| mansi      | gunjal    |
+| swaleha    | shaik     |
+| pratiksha  | raut      |
+| pratiksha  | raut      |
+| anamika    | sable     |
+| kamini     | salunke   |
++------------+-----------+
+13 rows in set (0.00 sec)
+
+mysql> select distinct department_id from employees;
++---------------+
+| department_id |
++---------------+
+|           501 |
+|           502 |
+|          NULL |
+|           503 |
+|           504 |
+|           506 |
+|           507 |
+|           508 |
+|           509 |
+|           510 |
+|           511 |
+|           512 |
++---------------+
+12 rows in set (0.01 sec)
+
+mysql> select*from employees order by first_name desc;
++-------------+------------+-----------+---------------+--------------+------------+--------+--------+------------+------------+---------------+
+| employee_id | first_name | last_name | email         | phone_number | hire_date  | job_id | salary | commission | manager_id | department_id |
++-------------+------------+-----------+---------------+--------------+------------+--------+--------+------------+------------+---------------+
+|         101 | vijeta     | badakh    | not available |    214354657 | 2025-09-15 |     10 |  30800 |          0 |          1 |           501 |
+|         105 | vijeta     | kale      | not available |     12436547 | 2023-06-22 |     30 |  35348 |          0 |          3 |           503 |
+|         104 | vaishanavi | NULL      | not available |         NULL | 2020-04-23 |   NULL |   NULL |          0 |       NULL |          NULL |
+|         109 | swaleha    | shaik     | not available |      1245467 | 2015-06-21 |     50 |  30000 |          0 |          7 |           508 |
+|         107 | sehal      | kharde    | not available |   1245567342 | 2014-05-01 |     40 |  25000 |          0 |          5 |           506 |
+|         110 | pratiksha  | raut      | not available |      1234536 | 2015-04-18 |      0 |  19000 |          0 |          8 |           509 |
+|         111 | pratiksha  | raut      | not available |     12534623 | 2017-04-18 |      0 |  44000 |          0 |          9 |           510 |
+|         102 | nikita     | badakh    | not available |    214354879 | 2025-09-26 |     20 |  23000 |          0 |          2 |           502 |
+|         108 | mansi      | gunjal    | not available |      1245435 | 2017-12-22 |     50 |  55000 |          0 |          6 |           507 |
+|         103 | krutika    | NULL      | not available |         NULL | 2014-03-03 |   NULL |   NULL |          0 |       NULL |          NULL |
+|         113 | kamini     | salunke   | not available |    987654333 | 2021-11-23 |      0 |  77000 |          0 |         11 |           512 |
+|         106 | gaytri     | kharde    | not available |     12400547 | 2023-05-01 |     30 |  44000 |          0 |          4 |           504 |
+|         112 | anamika    | sable     | not available |    234360987 | 2020-03-29 |      0 |  55000 |          0 |         10 |           511 |
++-------------+------------+-----------+---------------+--------------+------------+--------+--------+------------+------------+---------------+
+13 rows in set (0.01 sec)
+
+mysql> select first_name,last_name,salary,(salary*0.15) as "PF" from employees;
++------------+-----------+--------+----------+
+| first_name | last_name | salary | PF       |
++------------+-----------+--------+----------+
+| vijeta     | badakh    |  30800 |  4620.00 |
+| nikita     | badakh    |  23000 |  3450.00 |
+| krutika    | NULL      |   NULL |     NULL |
+| vaishanavi | NULL      |   NULL |     NULL |
+| vijeta     | kale      |  35348 |  5302.20 |
+| gaytri     | kharde    |  44000 |  6600.00 |
+| sehal      | kharde    |  25000 |  3750.00 |
+| mansi      | gunjal    |  55000 |  8250.00 |
+| swaleha    | shaik     |  30000 |  4500.00 |
+| pratiksha  | raut      |  19000 |  2850.00 |
+| pratiksha  | raut      |  44000 |  6600.00 |
+| anamika    | sable     |  55000 |  8250.00 |
+| kamini     | salunke   |  77000 | 11550.00 |
++------------+-----------+--------+----------+
+13 rows in set (0.00 sec)
+
+mysql> select employee_id,first_name,last_name,salary from employees order by salary;
++-------------+------------+-----------+--------+
+| employee_id | first_name | last_name | salary |
++-------------+------------+-----------+--------+
+|         103 | krutika    | NULL      |   NULL |
+|         104 | vaishanavi | NULL      |   NULL |
+|         110 | pratiksha  | raut      |  19000 |
+|         102 | nikita     | badakh    |  23000 |
+|         107 | sehal      | kharde    |  25000 |
+|         109 | swaleha    | shaik     |  30000 |
+|         101 | vijeta     | badakh    |  30800 |
+|         105 | vijeta     | kale      |  35348 |
+|         106 | gaytri     | kharde    |  44000 |
+|         111 | pratiksha  | raut      |  44000 |
+|         108 | mansi      | gunjal    |  55000 |
+|         112 | anamika    | sable     |  55000 |
+|         113 | kamini     | salunke   |  77000 |
++-------------+------------+-----------+--------+
+13 rows in set (0.00 sec)
+
+mysql> select sum(salary);
+ERROR 1054 (42S22): Unknown column 'salary' in 'field list'
+mysql> select sum(salary) from employees;
++-------------+
+| sum(salary) |
++-------------+
+|      438148 |
++-------------+
+1 row in set (0.01 sec)
+
+mysql> select max(salary),min(salary) from employees;
++-------------+-------------+
+| max(salary) | min(salary) |
++-------------+-------------+
+|       77000 |       19000 |
++-------------+-------------+
+1 row in set (0.00 sec)
+
+mysql> select avg(salary),count(*) from employees;
++-------------+----------+
+| avg(salary) | count(*) |
++-------------+----------+
+|  39831.6364 |       13 |
++-------------+----------+
+1 row in set (0.00 sec)
+
+mysql> select count(*) from employees;
++----------+
+| count(*) |
++----------+
+|       13 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> select job_id ,count(*) from employees where job_id is not null;
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'firstbit.employees.job_id'; this is incompatible with sql_mode=only_full_group_by
+mysql> select job_id ,count(*) from employees where job_id !=not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'not null' at line 1
+mysql> select job_id ,count(*) from employees where job_id =not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'not null' at line 1
+mysql> select job_id ,count(*) from employees where job_id not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'null' at line 1
+mysql> select job_id ,count(*) from employees;
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'firstbit.employees.job_id'; this is incompatible with sql_mode=only_full_group_by
+mysql> select count(*) from employees;
++----------+
+| count(*) |
++----------+
+|       13 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select * from employees;
++-------------+------------+-----------+---------------+--------------+------------+--------+--------+------------+------------+---------------+
+| employee_id | first_name | last_name | email         | phone_number | hire_date  | job_id | salary | commission | manager_id | department_id |
++-------------+------------+-----------+---------------+--------------+------------+--------+--------+------------+------------+---------------+
+|         101 | vijeta     | badakh    | not available |    214354657 | 2025-09-15 |     10 |  30800 |          0 |          1 |           501 |
+|         102 | nikita     | badakh    | not available |    214354879 | 2025-09-26 |     20 |  23000 |          0 |          2 |           502 |
+|         103 | krutika    | NULL      | not available |         NULL | 2014-03-03 |   NULL |   NULL |          0 |       NULL |          NULL |
+|         104 | vaishanavi | NULL      | not available |         NULL | 2020-04-23 |   NULL |   NULL |          0 |       NULL |          NULL |
+|         105 | vijeta     | kale      | not available |     12436547 | 2023-06-22 |     30 |  35348 |          0 |          3 |           503 |
+|         106 | gaytri     | kharde    | not available |     12400547 | 2023-05-01 |     30 |  44000 |          0 |          4 |           504 |
+|         107 | sehal      | kharde    | not available |   1245567342 | 2014-05-01 |     40 |  25000 |          0 |          5 |           506 |
+|         108 | mansi      | gunjal    | not available |      1245435 | 2017-12-22 |     50 |  55000 |          0 |          6 |           507 |
+|         109 | swaleha    | shaik     | not available |      1245467 | 2015-06-21 |     50 |  30000 |          0 |          7 |           508 |
+|         110 | pratiksha  | raut      | not available |      1234536 | 2015-04-18 |      0 |  19000 |          0 |          8 |           509 |
+|         111 | pratiksha  | raut      | not available |     12534623 | 2017-04-18 |      0 |  44000 |          0 |          9 |           510 |
+|         112 | anamika    | sable     | not available |    234360987 | 2020-03-29 |      0 |  55000 |          0 |         10 |           511 |
+|         113 | kamini     | salunke   | not available |    987654333 | 2021-11-23 |      0 |  77000 |          0 |         11 |           512 |
++-------------+------------+-----------+---------------+--------------+------------+--------+--------+------------+------------+---------------+
+13 rows in set (0.00 sec)
+
+mysql> select distinct count(job_id) from employees;
++---------------+
+| count(job_id) |
++---------------+
+|            11 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select distinct count(job_id) from employees
+    -> where job_id is not null;
++---------------+
+| count(job_id) |
++---------------+
+|            11 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select * from employees limit 10;
++-------------+------------+-----------+---------------+--------------+------------+--------+--------+------------+------------+---------------+
+| employee_id | first_name | last_name | email         | phone_number | hire_date  | job_id | salary | commission | manager_id | department_id |
++-------------+------------+-----------+---------------+--------------+------------+--------+--------+------------+------------+---------------+
+|         101 | vijeta     | badakh    | not available |    214354657 | 2025-09-15 |     10 |  30800 |          0 |          1 |           501 |
+|         102 | nikita     | badakh    | not available |    214354879 | 2025-09-26 |     20 |  23000 |          0 |          2 |           502 |
+|         103 | krutika    | NULL      | not available |         NULL | 2014-03-03 |   NULL |   NULL |          0 |       NULL |          NULL |
+|         104 | vaishanavi | NULL      | not available |         NULL | 2020-04-23 |   NULL |   NULL |          0 |       NULL |          NULL |
+|         105 | vijeta     | kale      | not available |     12436547 | 2023-06-22 |     30 |  35348 |          0 |          3 |           503 |
+|         106 | gaytri     | kharde    | not available |     12400547 | 2023-05-01 |     30 |  44000 |          0 |          4 |           504 |
+|         107 | sehal      | kharde    | not available |   1245567342 | 2014-05-01 |     40 |  25000 |          0 |          5 |           506 |
+|         108 | mansi      | gunjal    | not available |      1245435 | 2017-12-22 |     50 |  55000 |          0 |          6 |           507 |
+|         109 | swaleha    | shaik     | not available |      1245467 | 2015-06-21 |     50 |  30000 |          0 |          7 |           508 |
+|         110 | pratiksha  | raut      | not available |      1234536 | 2015-04-18 |      0 |  19000 |          0 |          8 |           509 |
++-------------+------------+-----------+---------------+--------------+------------+--------+--------+------------+------------+---------------+
+10 rows in set (0.00 sec)
+
+mysql> select first_name,last_name,salary from employees where salary is not between 10000 and 15000;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'between 10000 and 15000' at line 1
+mysql> select first_name,last_name,salary from employees where salary not between 10000 and 15000;
++------------+-----------+--------+
+| first_name | last_name | salary |
++------------+-----------+--------+
+| vijeta     | badakh    |  30800 |
+| nikita     | badakh    |  23000 |
+| vijeta     | kale      |  35348 |
+| gaytri     | kharde    |  44000 |
+| sehal      | kharde    |  25000 |
+| mansi      | gunjal    |  55000 |
+| swaleha    | shaik     |  30000 |
+| pratiksha  | raut      |  19000 |
+| pratiksha  | raut      |  44000 |
+| anamika    | sable     |  55000 |
+| kamini     | salunke   |  77000 |
++------------+-----------+--------+
+11 rows in set (0.00 sec)
+
+mysql> select first_name,last_name ,department_id from employee where department_id in(30,100) order by;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select first_name,last_name,department_id from employee where department_id in(30,100) order by;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select first_name,last_name,department_id from employee where department_id in(30,100) order by department_id;
+ERROR 1054 (42S22): Unknown column 'first_name' in 'field list'
+mysql> select first_name,last_name,department_id from employees where department_id in(30,100) order by department_id;
+Empty set (0.00 sec)
+
+mysql> select first_name,last_name,salary from employees where salary no between 10000 and 150000 and department_id(501,505);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'no between 10000 and 150000 and department_id(501,505)' at line 1
+mysql> select first_name,last_name,salary from employees where salary not between 10000 and 150000 and department_id(501,505);
+ERROR 1305 (42000): FUNCTION firstbit.department_id does not exist
+mysql> select first_name,last_name,salary from employees where salary not between 10000 and 150000 and department_id in(501,505);
+Empty set (0.00 sec)
+
+mysql> select first_name,last_name,salary from employees where salary not between 10000 and 150000 and department_id in(501,511);
+Empty set (0.00 sec)
+
+mysql> select first_name,last_name,hire_date from employees where YEAR(hire_date) = 20015;
+Empty set (0.00 sec)
+
+mysql> select first_name,last_name,hire_date from employees where YEAR(hire_date) = 2015;
++------------+-----------+------------+
+| first_name | last_name | hire_date  |
++------------+-----------+------------+
+| swaleha    | shaik     | 2015-06-21 |
+| pratiksha  | raut      | 2015-04-18 |
++------------+-----------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select first_name,last_name from employeesHERE first_name LIKE '%b%'
+    -> select first_name,last_name from employeesHERE first_name LIKE '%b%';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'LIKE '%b%'
+select first_name,last_name from employeesHERE first_name LIKE '%b%'' at line 1
+mysql> select first_name,last_name from employees first_name LIKE '%b%' and fist_name like '%d%;
+    '> ;
+    '> ;
+    '> ^C
+mysql> select first_name,last_name from employees first_name LIKE '%b%' and fist_name like '%d%';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'LIKE '%b%' and fist_name like '%d%'' at line 1
+mysql> select first_name,last_name from employees first_name like '%b%' and fist_name like '%c%';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'like '%b%' and fist_name like '%c%'' at line 1
+mysql> select first_name,last_name from employees first_name like '%b%';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'like '%b%'' at line 1
+mysql> select first_name,last_name from employees first_name like '%d';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'like '%d'' at line 1
+mysql> select first_name,last_name from employees first_name like "%d%";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'like "%d%"' at line 1
+mysql> select first_name,last_name from employees first_name like "%_d_%";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'like "%_d_%"' at line 1
+mysql> select first_name,last_name from employees first_name like "%%d%";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'like "%%d%"' at line 1
+mysql> select first_name,last_name from employees first_name like "%d%";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'like "%d%"' at line 1
+mysql> select first_name,last_name from employees first_name like '%__cd__%;
+    '> ';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'like '%__cd__%;
+'' at line 1
+mysql> select first_name,last_name from employees first_name like '%__cd__%';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'like '%__cd__%'' at line 1
+mysql> select first_name,last_name from employees first_name like "%d%" and "%c%";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'like "%d%" and "%c%"' at line 1
+mysql> select first_name,last_name from employees where first_name like "%d%" and "%c%";
+Empty set, 1 warning (0.01 sec)
+
+mysql> select first_name,last_name from employees where first_name like "%i%" and "%a%";
+Empty set, 1 warning (0.00 sec)
+
+mysql> select first_name,last_name from employees where first_name like "%i%" and  first_name like "%a%';
+    "> ;
+    "> ^C
+mysql> select first_name,last_name from employees where first_name like "%i%" and  first_name like "%a%";
++------------+-----------+
+| first_name | last_name |
++------------+-----------+
+| vijeta     | badakh    |
+| nikita     | badakh    |
+| krutika    | NULL      |
+| vaishanavi | NULL      |
+| vijeta     | kale      |
+| gaytri     | kharde    |
+| mansi      | gunjal    |
+| pratiksha  | raut      |
+| pratiksha  | raut      |
+| anamika    | sable     |
+| kamini     | salunke   |
++------------+-----------+
+11 rows in set (0.00 sec)
+
+mysql>
+
+
+
+
+
+
+
+
+
+
+
+
+

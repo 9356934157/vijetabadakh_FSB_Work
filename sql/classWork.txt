@@ -1,0 +1,176 @@
+mysql> use firstBit;
+Database changed
+mysql> show tables;
++--------------------+
+| Tables_in_firstbit |
++--------------------+
+| book               |
+| country            |
+| department         |
+| employee           |
+| employees          |
+| job                |
+| job_histry         |
+| jobs               |
+| lib_issue          |
+| member             |
+| student            |
++--------------------+
+11 rows in set (0.01 sec)
+
+mysql> table employees;
++-------------+------------+-----------+-------------+--------------+------------+--------+--------+------------+------------+---------------+
+| employee_id | first_name | last_name | email       | phone_number | hire_date  | job_id | salary | commission | manager_id | department_id |
++-------------+------------+-----------+-------------+--------------+------------+--------+--------+------------+------------+---------------+
+|         101 | vijeta     | badakh    | v@gmail.com |    214354657 | 2025-09-15 |     10 |  28000 |       NULL |          1 |           501 |
+|         102 | nikita     | badakh    | n@gmail.com |    214354879 | 2025-09-26 |     20 |  23000 |       NULL |          2 |           502 |
++-------------+------------+-----------+-------------+--------------+------------+--------+--------+------------+------------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> insert into employees(emloyee_id,first_name,hire_date)
+    -> values(103,"krutika","2014-03-03"),
+    -> (104,"vaishanavi","2020-04-23");
+ERROR 1054 (42S22): Unknown column 'emloyee_id' in 'field list'
+mysql> insert into employees(employee_id,first_name,hire_date)
+    -> values(103,"krutika","2014-03-03"),
+    -> (104,"vaishanavi","2020-04-23");
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> table employees;
++-------------+------------+-----------+-------------+--------------+------------+--------+--------+------------+------------+---------------+
+| employee_id | first_name | last_name | email       | phone_number | hire_date  | job_id | salary | commission | manager_id | department_id |
++-------------+------------+-----------+-------------+--------------+------------+--------+--------+------------+------------+---------------+
+|         101 | vijeta     | badakh    | v@gmail.com |    214354657 | 2025-09-15 |     10 |  28000 |       NULL |          1 |           501 |
+|         102 | nikita     | badakh    | n@gmail.com |    214354879 | 2025-09-26 |     20 |  23000 |       NULL |          2 |           502 |
+|         103 | krutika    | NULL      | NULL        |         NULL | 2014-03-03 |   NULL |   NULL |       NULL |       NULL |          NULL |
+|         104 | vaishanavi | NULL      | NULL        |         NULL | 2020-04-23 |   NULL |   NULL |       NULL |       NULL |          NULL |
++-------------+------------+-----------+-------------+--------------+------------+--------+--------+------------+------------+---------------+
+4 rows in set (0.00 sec)
+
+mysql>
+mysql> select length(name) as salary from employees;
+ERROR 1054 (42S22): Unknown column 'name' in 'field list'
+mysql> select length(first_name) as salary from employees;
++--------+
+| salary |
++--------+
+|      6 |
+|      6 |
+|      7 |
+|     10 |
++--------+
+4 rows in set (0.00 sec)
+
+mysql> select name,length(first_name) as "length" from employees;
+ERROR 1054 (42S22): Unknown column 'name' in 'field list'
+mysql> select first_name,length(first_name) as "length" from employees;
++------------+--------+
+| first_name | length |
++------------+--------+
+| vijeta     |      6 |
+| nikita     |      6 |
+| krutika    |      7 |
+| vaishanavi |     10 |
++------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select first_name,locate("i",first_name)from employees;
++------------+------------------------+
+| first_name | locate("i",first_name) |
++------------+------------------------+
+| vijeta     |                      2 |
+| nikita     |                      2 |
+| krutika    |                      5 |
+| vaishanavi |                      3 |
++------------+------------------------+
+4 rows in set (0.00 sec)
+
+mysql> select substring("firstBit solution",10,3);
++-------------------------------------+
+| substring("firstBit solution",10,3) |
++-------------------------------------+
+| sol                                 |
++-------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select first_name,upper(first_name)from employees;
++------------+-------------------+
+| first_name | upper(first_name) |
++------------+-------------------+
+| vijeta     | VIJETA            |
+| nikita     | NIKITA            |
+| krutika    | KRUTIKA           |
+| vaishanavi | VAISHANAVI        |
++------------+-------------------+
+4 rows in set (0.00 sec)
+
+mysql> select first_name,lower(first_name)from employees;
++------------+-------------------+
+| first_name | lower(first_name) |
++------------+-------------------+
+| vijeta     | vijeta            |
+| nikita     | nikita            |
+| krutika    | krutika           |
+| vaishanavi | vaishanavi        |
++------------+-------------------+
+4 rows in set (0.00 sec)
+
+mysql> select year(hire_date)from employees;
++-----------------+
+| year(hire_date) |
++-----------------+
+|            2025 |
+|            2025 |
+|            2014 |
+|            2020 |
++-----------------+
+4 rows in set (0.00 sec)
+
+mysql> select monthname(hire_date)from employees;
++----------------------+
+| monthname(hire_date) |
++----------------------+
+| September            |
+| September            |
+| March                |
+| April                |
++----------------------+
+4 rows in set (0.01 sec)
+
+mysql> select hire_date,day(hire_date)from employees;
++------------+----------------+
+| hire_date  | day(hire_date) |
++------------+----------------+
+| 2025-09-15 |             15 |
+| 2025-09-26 |             26 |
+| 2014-03-03 |              3 |
+| 2020-04-23 |             23 |
++------------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> select curdate();
++------------+
+| curdate()  |
++------------+
+| 2025-09-25 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select now();
++---------------------+
+| now()               |
++---------------------+
+| 2025-09-25 16:33:47 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> select sysdate();
++---------------------+
+| sysdate()           |
++---------------------+
+| 2025-09-25 16:34:05 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql>

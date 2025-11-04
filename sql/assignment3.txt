@@ -1,0 +1,419 @@
+Enter password: ***********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 26
+Server version: 8.0.41 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use firstBit;
+Database changed
+mysql> show table;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> show tables;
++--------------------+
+| Tables_in_firstbit |
++--------------------+
+| book               |
+| country            |
+| department         |
+| employee           |
+| employees          |
+| job                |
+| job_histry         |
+| jobs               |
+| lib_issue          |
+| member             |
+| student            |
++--------------------+
+11 rows in set (0.05 sec)
+
+mysql> show employees;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'employees' at line 1
+mysql> desc employees
+    -> ;
++---------------+--------------+------+-----+---------+-------+
+| Field         | Type         | Null | Key | Default | Extra |
++---------------+--------------+------+-----+---------+-------+
+| employee_id   | int          | NO   | PRI | NULL    |       |
+| first_name    | varchar(20)  | YES  |     | NULL    |       |
+| last_name     | varchar(20)  | YES  |     | NULL    |       |
+| email         | varchar(20)  | YES  |     | NULL    |       |
+| phone_number  | int          | YES  |     | NULL    |       |
+| hire_date     | date         | YES  |     | NULL    |       |
+| job_id        | int          | YES  |     | NULL    |       |
+| salary        | float(7,0)   | YES  |     | NULL    |       |
+| commission    | int          | YES  |     | NULL    |       |
+| manager_id    | decimal(4,0) | YES  |     | NULL    |       |
+| department_id | decimal(4,0) | YES  |     | NULL    |       |
++---------------+--------------+------+-----+---------+-------+
+11 rows in set (0.01 sec)
+
+mysql> select*from employees;
++-------------+------------+-----------+-------------+--------------+------------+--------+--------+------------+------------+---------------+
+| employee_id | first_name | last_name | email       | phone_number | hire_date  | job_id | salary | commission | manager_id | department_id |
++-------------+------------+-----------+-------------+--------------+------------+--------+--------+------------+------------+---------------+
+|         101 | vijeta     | badakh    | v@gmail.com |    214354657 | 2025-09-15 |     10 |  28000 |       NULL |          1 |           501 |
+|         102 | nikita     | badakh    | n@gmail.com |    214354879 | 2025-09-26 |     20 |  23000 |       NULL |          2 |           502 |
+|         103 | krutika    | NULL      | NULL        |         NULL | 2014-03-03 |   NULL |   NULL |       NULL |       NULL |          NULL |
+|         104 | vaishanavi | NULL      | NULL        |         NULL | 2020-04-23 |   NULL |   NULL |       NULL |       NULL |          NULL |
++-------------+------------+-----------+-------------+--------------+------------+--------+--------+------------+------------+---------------+
+4 rows in set (0.01 sec)
+
+mysql> select*from department;;
++------------+-----------------+---------------+-------------+
+| manager_id | department_name | department_id | location_Id |
++------------+-----------------+---------------+-------------+
+|          1 | it              |           501 |         601 |
+|          2 | hr              |           502 |         602 |
++------------+-----------------+---------------+-------------+
+2 rows in set (0.00 sec)
+
+ERROR:
+No query specified
+
+mysql> insert into department(3,"sales",502,602);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '3,"sales",502,602)' at line 1
+mysql> select*from department;
++------------+-----------------+---------------+-------------+
+| manager_id | department_name | department_id | location_Id |
++------------+-----------------+---------------+-------------+
+|          1 | it              |           501 |         601 |
+|          2 | hr              |           502 |         602 |
++------------+-----------------+---------------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> insert into department(3,"sales",502,602);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '3,"sales",502,602)' at line 1
+mysql> insert into department values(3,"sales",502,602);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into department values(4,"marketing",503,604);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into department values(5,"shipping",504,605);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into department values(6,"admin",505,606);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select*from department;
++------------+-----------------+---------------+-------------+
+| manager_id | department_name | department_id | location_Id |
++------------+-----------------+---------------+-------------+
+|          1 | it              |           501 |         601 |
+|          2 | hr              |           502 |         602 |
+|          3 | sales           |           502 |         602 |
+|          4 | marketing       |           503 |         604 |
+|          5 | shipping        |           504 |         605 |
+|          6 | admin           |           505 |         606 |
++------------+-----------------+---------------+-------------+
+6 rows in set (0.00 sec)
+       ;
+ERROR:
+No query specified
+
+mysql> show create table employees;
++-----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table     | Create Table                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
++-----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| employees | CREATE TABLE `employees` (
+  `employee_id` int NOT NULL,
+  `first_name` varchar(20) DEFAULT NULL,
+  `last_name` varchar(20) DEFAULT NULL,
+  `email` varchar(20) DEFAULT NULL,
+  `phone_number` int DEFAULT NULL,
+  `hire_date` date DEFAULT NULL,
+  `job_id` int DEFAULT NULL,
+  `salary` float(7,0) DEFAULT NULL,
+  `commission` int DEFAULT NULL,
+  `manager_id` decimal(4,0) DEFAULT NULL,
+  `department_id` decimal(4,0) DEFAULT NULL,
+  PRIMARY KEY (`employee_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++-----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.01 sec)
+
+mysql> select*from employees;
++-------------+------------+-----------+-------------+--------------+------------+--------+--------+------------+------------+---------------+
+| employee_id | first_name | last_name | email       | phone_number | hire_date  | job_id | salary | commission | manager_id | department_id |
++-------------+------------+-----------+-------------+--------------+------------+--------+--------+------------+------------+---------------+
+|         101 | vijeta     | badakh    | v@gmail.com |    214354657 | 2025-09-15 |     10 |  28000 |       NULL |          1 |           501 |
+|         102 | nikita     | badakh    | n@gmail.com |    214354879 | 2025-09-26 |     20 |  23000 |       NULL |          2 |           502 |
+|         103 | krutika    | NULL      | NULL        |         NULL | 2014-03-03 |   NULL |   NULL |       NULL |       NULL |          NULL |
+|         104 | vaishanavi | NULL      | NULL        |         NULL | 2020-04-23 |   NULL |   NULL |       NULL |       NULL |          NULL |
++-------------+------------+-----------+-------------+--------------+------------+--------+--------+------------+------------+---------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into employees values(105,"vijeta",kale,"vb@gmail.com",12436547,"2023-06-22",30,35348,0,3,503);
+ERROR 1054 (42S22): Unknown column 'kale' in 'field list'
+mysql> insert into employees values(105,"vijeta","kale","vb@gmail.com",12436547,"2023-06-22",30,35348,0,3,503);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employees values(106,"gaytri","kharde","gk@gmail.com",12400547,"2023-05-1",30,44000,356,4,504);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employees values(107,"sehal","kharde","sk@gmail.com",1245567342,"2014-05-1",40,25000,0,5,506);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employees values(107,"mansi","gunjal","mg@gmail.com",1245435,"2017-12-22",50,55000,0,6,507);
+ERROR 1062 (23000): Duplicate entry '107' for key 'employees.PRIMARY'
+mysql> insert into employees values(108,"mansi","gunjal","mg@gmail.com",1245435,"2017-12-22",50,55000,0,6,507);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employees values(109,"swaleha","shaik","ss@gmail.com",1245467,"2015-6-21",50,30000,43,7,508);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into employees values(110,"pratiksha","raut","pr@gmail.com",1234536,"2015-4-18",0,19000,2,8,509);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select*from employees;
++-------------+------------+-----------+--------------+--------------+------------+--------+--------+------------+------------+---------------+
+| employee_id | first_name | last_name | email        | phone_number | hire_date  | job_id | salary | commission | manager_id | department_id |
++-------------+------------+-----------+--------------+--------------+------------+--------+--------+------------+------------+---------------+
+|         101 | vijeta     | badakh    | v@gmail.com  |    214354657 | 2025-09-15 |     10 |  28000 |       NULL |          1 |           501 |
+|         102 | nikita     | badakh    | n@gmail.com  |    214354879 | 2025-09-26 |     20 |  23000 |       NULL |          2 |           502 |
+|         103 | krutika    | NULL      | NULL         |         NULL | 2014-03-03 |   NULL |   NULL |       NULL |       NULL |          NULL |
+|         104 | vaishanavi | NULL      | NULL         |         NULL | 2020-04-23 |   NULL |   NULL |       NULL |       NULL |          NULL |
+|         105 | vijeta     | kale      | vb@gmail.com |     12436547 | 2023-06-22 |     30 |  35348 |          0 |          3 |           503 |
+|         106 | gaytri     | kharde    | gk@gmail.com |     12400547 | 2023-05-01 |     30 |  44000 |        356 |          4 |           504 |
+|         107 | sehal      | kharde    | sk@gmail.com |   1245567342 | 2014-05-01 |     40 |  25000 |          0 |          5 |           506 |
+|         108 | mansi      | gunjal    | mg@gmail.com |      1245435 | 2017-12-22 |     50 |  55000 |          0 |          6 |           507 |
+|         109 | swaleha    | shaik     | ss@gmail.com |      1245467 | 2015-06-21 |     50 |  30000 |         43 |          7 |           508 |
+|         110 | pratiksha  | raut      | pr@gmail.com |      1234536 | 2015-04-18 |      0 |  19000 |          2 |          8 |           509 |
++-------------+------------+-----------+--------------+--------------+------------+--------+--------+------------+------------+---------------+
+10 rows in set (0.00 sec)
+
+mysql> select*from department;
++------------+-----------------+---------------+-------------+
+| manager_id | department_name | department_id | location_Id |
++------------+-----------------+---------------+-------------+
+|          1 | it              |           501 |         601 |
+|          2 | hr              |           502 |         602 |
+|          3 | sales           |           502 |         602 |
+|          4 | marketing       |           503 |         604 |
+|          5 | shipping        |           504 |         605 |
+|          6 | admin           |           505 |         606 |
++------------+-----------------+---------------+-------------+
+6 rows in set (0.00 sec)
+
+mysql> desc job;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| job_id     | int         | YES  |     | NULL    |       |
+| job_title  | varchar(20) | YES  |     | blank   |       |
+| min_salary | float(10,2) | YES  |     | 8000.00 |       |
+| max_salary | float(10,2) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select*from job;
+Empty set (0.01 sec)
+
+mysql> insert into job values(1,"sale manager",2200,16000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into job values(2,"accountant",15000,30000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into job values(3,"president",40000,80000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into job values(4,"finaces manager",35000,50000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into job values(5,"admin assistant",27000,40000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select*from job;
++--------+-----------------+------------+------------+
+| job_id | job_title       | min_salary | max_salary |
++--------+-----------------+------------+------------+
+|      1 | sale manager    |    2200.00 |   16000.00 |
+|      2 | accountant      |   15000.00 |   30000.00 |
+|      3 | president       |   40000.00 |   80000.00 |
+|      4 | finaces manager |   35000.00 |   50000.00 |
+|      5 | admin assistant |   27000.00 |   40000.00 |
++--------+-----------------+------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into employees values(111,"pratiksha","raut","pp@gmail.com",12534623,"2017-4-18",0,44000,2,9,510),(112,"anamika","sable","an@gamil.com",23436098765,0,55000,3,10,511),(113,"kamini","salunke","ks@gmail.com",987654333,"2021-11-23",0,77000,3,11,512);
+ERROR 1136 (21S01): Column count doesn't match value count at row 2
+mysql> insert into employees values(111,"pratiksha","raut","pp@gmail.com",12534623,"2017-4-18",0,44000,2,9,510),(112,"anamika","sable","an@gamil.com",23436098765,"2020-3-29",0,55000,3,10,511),(113,"kamini","salunke","ks@gmail.com",987654333,"2021-11-23",0,77000,3,11,512);
+ERROR 1264 (22003): Out of range value for column 'phone_number' at row 2
+mysql> insert into employees values(111,"pratiksha","raut","pp@gmail.com",12534623,"2017-4-18",0,44000,2,9,510),(112,"anamika","sable","an@gamil.com",234360987,"2020-3-29",0,55000,3,10,511),(113,"kamini","salunke","ks@gmail.com",987654333,"2021-11-23",0,77000,3,11,512);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> UPDATE employees
+    -> SET salary = salary * 1.10
+    -> WHERE department_id = 5;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> update employees set salary= salary*1.10 where department_id=1;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> select*from employees;
++-------------+------------+-----------+--------------+--------------+------------+--------+--------+------------+------------+---------------+
+| employee_id | first_name | last_name | email        | phone_number | hire_date  | job_id | salary | commission | manager_id | department_id |
++-------------+------------+-----------+--------------+--------------+------------+--------+--------+------------+------------+---------------+
+|         101 | vijeta     | badakh    | v@gmail.com  |    214354657 | 2025-09-15 |     10 |  28000 |       NULL |          1 |           501 |
+|         102 | nikita     | badakh    | n@gmail.com  |    214354879 | 2025-09-26 |     20 |  23000 |       NULL |          2 |           502 |
+|         103 | krutika    | NULL      | NULL         |         NULL | 2014-03-03 |   NULL |   NULL |       NULL |       NULL |          NULL |
+|         104 | vaishanavi | NULL      | NULL         |         NULL | 2020-04-23 |   NULL |   NULL |       NULL |       NULL |          NULL |
+|         105 | vijeta     | kale      | vb@gmail.com |     12436547 | 2023-06-22 |     30 |  35348 |          0 |          3 |           503 |
+|         106 | gaytri     | kharde    | gk@gmail.com |     12400547 | 2023-05-01 |     30 |  44000 |        356 |          4 |           504 |
+|         107 | sehal      | kharde    | sk@gmail.com |   1245567342 | 2014-05-01 |     40 |  25000 |          0 |          5 |           506 |
+|         108 | mansi      | gunjal    | mg@gmail.com |      1245435 | 2017-12-22 |     50 |  55000 |          0 |          6 |           507 |
+|         109 | swaleha    | shaik     | ss@gmail.com |      1245467 | 2015-06-21 |     50 |  30000 |         43 |          7 |           508 |
+|         110 | pratiksha  | raut      | pr@gmail.com |      1234536 | 2015-04-18 |      0 |  19000 |          2 |          8 |           509 |
+|         111 | pratiksha  | raut      | pp@gmail.com |     12534623 | 2017-04-18 |      0 |  44000 |          2 |          9 |           510 |
+|         112 | anamika    | sable     | an@gamil.com |    234360987 | 2020-03-29 |      0 |  55000 |          3 |         10 |           511 |
+|         113 | kamini     | salunke   | ks@gmail.com |    987654333 | 2021-11-23 |      0 |  77000 |          3 |         11 |           512 |
++-------------+------------+-----------+--------------+--------------+------------+--------+--------+------------+------------+---------------+
+13 rows in set (0.00 sec)
+
+mysql> update employees set salary= salary*1.10 where department_id=501;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select*from employees;
++-------------+------------+-----------+--------------+--------------+------------+--------+--------+------------+------------+---------------+
+| employee_id | first_name | last_name | email        | phone_number | hire_date  | job_id | salary | commission | manager_id | department_id |
++-------------+------------+-----------+--------------+--------------+------------+--------+--------+------------+------------+---------------+
+|         101 | vijeta     | badakh    | v@gmail.com  |    214354657 | 2025-09-15 |     10 |  30800 |       NULL |          1 |           501 |
+|         102 | nikita     | badakh    | n@gmail.com  |    214354879 | 2025-09-26 |     20 |  23000 |       NULL |          2 |           502 |
+|         103 | krutika    | NULL      | NULL         |         NULL | 2014-03-03 |   NULL |   NULL |       NULL |       NULL |          NULL |
+|         104 | vaishanavi | NULL      | NULL         |         NULL | 2020-04-23 |   NULL |   NULL |       NULL |       NULL |          NULL |
+|         105 | vijeta     | kale      | vb@gmail.com |     12436547 | 2023-06-22 |     30 |  35348 |          0 |          3 |           503 |
+|         106 | gaytri     | kharde    | gk@gmail.com |     12400547 | 2023-05-01 |     30 |  44000 |        356 |          4 |           504 |
+|         107 | sehal      | kharde    | sk@gmail.com |   1245567342 | 2014-05-01 |     40 |  25000 |          0 |          5 |           506 |
+|         108 | mansi      | gunjal    | mg@gmail.com |      1245435 | 2017-12-22 |     50 |  55000 |          0 |          6 |           507 |
+|         109 | swaleha    | shaik     | ss@gmail.com |      1245467 | 2015-06-21 |     50 |  30000 |         43 |          7 |           508 |
+|         110 | pratiksha  | raut      | pr@gmail.com |      1234536 | 2015-04-18 |      0 |  19000 |          2 |          8 |           509 |
+|         111 | pratiksha  | raut      | pp@gmail.com |     12534623 | 2017-04-18 |      0 |  44000 |          2 |          9 |           510 |
+|         112 | anamika    | sable     | an@gamil.com |    234360987 | 2020-03-29 |      0 |  55000 |          3 |         10 |           511 |
+|         113 | kamini     | salunke   | ks@gmail.com |    987654333 | 2021-11-23 |      0 |  77000 |          3 |         11 |           512 |
++-------------+------------+-----------+--------------+--------------+------------+--------+--------+------------+------------+---------------+
+13 rows in set (0.00 sec)
+
+mysql>  update employees set email="not available" where department_id=80 and
+    ->  update employees set email="not available" where department_id=80 and;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'update employees set email="not available" where department_id=80 and' at line 2
+mysql>  update employees set email="not available" where department_id=502 and commision=commision-(commision*20);
+ERROR 1054 (42S22): Unknown column 'commision' in 'where clause'
+mysql>  update employees set email="not available" where department_id=502 and commision=commission-(commission*20);
+ERROR 1054 (42S22): Unknown column 'commision' in 'where clause'
+mysql>  update employees set email="not available" where department_id=502 and commission=commission-(commission*20);
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql>  update employees set email="not available" where department_id=502 and commission<0.20;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> select*from employees;
++-------------+------------+-----------+--------------+--------------+------------+--------+--------+------------+------------+---------------+
+| employee_id | first_name | last_name | email        | phone_number | hire_date  | job_id | salary | commission | manager_id | department_id |
++-------------+------------+-----------+--------------+--------------+------------+--------+--------+------------+------------+---------------+
+|         101 | vijeta     | badakh    | v@gmail.com  |    214354657 | 2025-09-15 |     10 |  30800 |       NULL |          1 |           501 |
+|         102 | nikita     | badakh    | n@gmail.com  |    214354879 | 2025-09-26 |     20 |  23000 |       NULL |          2 |           502 |
+|         103 | krutika    | NULL      | NULL         |         NULL | 2014-03-03 |   NULL |   NULL |       NULL |       NULL |          NULL |
+|         104 | vaishanavi | NULL      | NULL         |         NULL | 2020-04-23 |   NULL |   NULL |       NULL |       NULL |          NULL |
+|         105 | vijeta     | kale      | vb@gmail.com |     12436547 | 2023-06-22 |     30 |  35348 |          0 |          3 |           503 |
+|         106 | gaytri     | kharde    | gk@gmail.com |     12400547 | 2023-05-01 |     30 |  44000 |        356 |          4 |           504 |
+|         107 | sehal      | kharde    | sk@gmail.com |   1245567342 | 2014-05-01 |     40 |  25000 |          0 |          5 |           506 |
+|         108 | mansi      | gunjal    | mg@gmail.com |      1245435 | 2017-12-22 |     50 |  55000 |          0 |          6 |           507 |
+|         109 | swaleha    | shaik     | ss@gmail.com |      1245467 | 2015-06-21 |     50 |  30000 |         43 |          7 |           508 |
+|         110 | pratiksha  | raut      | pr@gmail.com |      1234536 | 2015-04-18 |      0 |  19000 |          2 |          8 |           509 |
+|         111 | pratiksha  | raut      | pp@gmail.com |     12534623 | 2017-04-18 |      0 |  44000 |          2 |          9 |           510 |
+|         112 | anamika    | sable     | an@gamil.com |    234360987 | 2020-03-29 |      0 |  55000 |          3 |         10 |           511 |
+|         113 | kamini     | salunke   | ks@gmail.com |    987654333 | 2021-11-23 |      0 |  77000 |          3 |         11 |           512 |
++-------------+------------+-----------+--------------+--------------+------------+--------+--------+------------+------------+---------------+
+13 rows in set (0.00 sec)
+
+mysql>  update employees set email="not available" where department_id=508 and commission<0.20;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> select*from employees;
++-------------+------------+-----------+--------------+--------------+------------+--------+--------+------------+------------+---------------+
+| employee_id | first_name | last_name | email        | phone_number | hire_date  | job_id | salary | commission | manager_id | department_id |
++-------------+------------+-----------+--------------+--------------+------------+--------+--------+------------+------------+---------------+
+|         101 | vijeta     | badakh    | v@gmail.com  |    214354657 | 2025-09-15 |     10 |  30800 |       NULL |          1 |           501 |
+|         102 | nikita     | badakh    | n@gmail.com  |    214354879 | 2025-09-26 |     20 |  23000 |       NULL |          2 |           502 |
+|         103 | krutika    | NULL      | NULL         |         NULL | 2014-03-03 |   NULL |   NULL |       NULL |       NULL |          NULL |
+|         104 | vaishanavi | NULL      | NULL         |         NULL | 2020-04-23 |   NULL |   NULL |       NULL |       NULL |          NULL |
+|         105 | vijeta     | kale      | vb@gmail.com |     12436547 | 2023-06-22 |     30 |  35348 |          0 |          3 |           503 |
+|         106 | gaytri     | kharde    | gk@gmail.com |     12400547 | 2023-05-01 |     30 |  44000 |        356 |          4 |           504 |
+|         107 | sehal      | kharde    | sk@gmail.com |   1245567342 | 2014-05-01 |     40 |  25000 |          0 |          5 |           506 |
+|         108 | mansi      | gunjal    | mg@gmail.com |      1245435 | 2017-12-22 |     50 |  55000 |          0 |          6 |           507 |
+|         109 | swaleha    | shaik     | ss@gmail.com |      1245467 | 2015-06-21 |     50 |  30000 |         43 |          7 |           508 |
+|         110 | pratiksha  | raut      | pr@gmail.com |      1234536 | 2015-04-18 |      0 |  19000 |          2 |          8 |           509 |
+|         111 | pratiksha  | raut      | pp@gmail.com |     12534623 | 2017-04-18 |      0 |  44000 |          2 |          9 |           510 |
+|         112 | anamika    | sable     | an@gamil.com |    234360987 | 2020-03-29 |      0 |  55000 |          3 |         10 |           511 |
+|         113 | kamini     | salunke   | ks@gmail.com |    987654333 | 2021-11-23 |      0 |  77000 |          3 |         11 |           512 |
++-------------+------------+-----------+--------------+--------------+------------+--------+--------+------------+------------+---------------+
+13 rows in set (0.00 sec)
+
+mysql>  update employees set email=not available where (select department_id from department where job_title="sale manager");
+ERROR 1054 (42S22): Unknown column 'job_title' in 'where clause'
+mysql>  update employees set email=not available where (select department_id from department where department_name="it");
+ERROR 1054 (42S22): Unknown column 'available' in 'field list'
+mysql>  update employees set email="not available" where (select department_id from department where department_name="it");
+Query OK, 13 rows affected (0.01 sec)
+Rows matched: 13  Changed: 13  Warnings: 0
+
+mysql> select*from employees;
++-------------+------------+-----------+---------------+--------------+------------+--------+--------+------------+------------+---------------+
+| employee_id | first_name | last_name | email         | phone_number | hire_date  | job_id | salary | commission | manager_id | department_id |
++-------------+------------+-----------+---------------+--------------+------------+--------+--------+------------+------------+---------------+
+|         101 | vijeta     | badakh    | not available |    214354657 | 2025-09-15 |     10 |  30800 |       NULL |          1 |           501 |
+|         102 | nikita     | badakh    | not available |    214354879 | 2025-09-26 |     20 |  23000 |       NULL |          2 |           502 |
+|         103 | krutika    | NULL      | not available |         NULL | 2014-03-03 |   NULL |   NULL |       NULL |       NULL |          NULL |
+|         104 | vaishanavi | NULL      | not available |         NULL | 2020-04-23 |   NULL |   NULL |       NULL |       NULL |          NULL |
+|         105 | vijeta     | kale      | not available |     12436547 | 2023-06-22 |     30 |  35348 |          0 |          3 |           503 |
+|         106 | gaytri     | kharde    | not available |     12400547 | 2023-05-01 |     30 |  44000 |        356 |          4 |           504 |
+|         107 | sehal      | kharde    | not available |   1245567342 | 2014-05-01 |     40 |  25000 |          0 |          5 |           506 |
+|         108 | mansi      | gunjal    | not available |      1245435 | 2017-12-22 |     50 |  55000 |          0 |          6 |           507 |
+|         109 | swaleha    | shaik     | not available |      1245467 | 2015-06-21 |     50 |  30000 |         43 |          7 |           508 |
+|         110 | pratiksha  | raut      | not available |      1234536 | 2015-04-18 |      0 |  19000 |          2 |          8 |           509 |
+|         111 | pratiksha  | raut      | not available |     12534623 | 2017-04-18 |      0 |  44000 |          2 |          9 |           510 |
+|         112 | anamika    | sable     | not available |    234360987 | 2020-03-29 |      0 |  55000 |          3 |         10 |           511 |
+|         113 | kamini     | salunke   | not available |    987654333 | 2021-11-23 |      0 |  77000 |          3 |         11 |           512 |
++-------------+------------+-----------+---------------+--------------+------------+--------+--------+------------+------------+---------------+
+13 rows in set (0.00 sec)
+
+mysql>  update employees set email="not available",commission = 0.10;
+Query OK, 10 rows affected (0.00 sec)
+Rows matched: 13  Changed: 10  Warnings: 0
+
+mysql> select*from employees;
++-------------+------------+-----------+---------------+--------------+------------+--------+--------+------------+------------+---------------+
+| employee_id | first_name | last_name | email         | phone_number | hire_date  | job_id | salary | commission | manager_id | department_id |
++-------------+------------+-----------+---------------+--------------+------------+--------+--------+------------+------------+---------------+
+|         101 | vijeta     | badakh    | not available |    214354657 | 2025-09-15 |     10 |  30800 |          0 |          1 |           501 |
+|         102 | nikita     | badakh    | not available |    214354879 | 2025-09-26 |     20 |  23000 |          0 |          2 |           502 |
+|         103 | krutika    | NULL      | not available |         NULL | 2014-03-03 |   NULL |   NULL |          0 |       NULL |          NULL |
+|         104 | vaishanavi | NULL      | not available |         NULL | 2020-04-23 |   NULL |   NULL |          0 |       NULL |          NULL |
+|         105 | vijeta     | kale      | not available |     12436547 | 2023-06-22 |     30 |  35348 |          0 |          3 |           503 |
+|         106 | gaytri     | kharde    | not available |     12400547 | 2023-05-01 |     30 |  44000 |          0 |          4 |           504 |
+|         107 | sehal      | kharde    | not available |   1245567342 | 2014-05-01 |     40 |  25000 |          0 |          5 |           506 |
+|         108 | mansi      | gunjal    | not available |      1245435 | 2017-12-22 |     50 |  55000 |          0 |          6 |           507 |
+|         109 | swaleha    | shaik     | not available |      1245467 | 2015-06-21 |     50 |  30000 |          0 |          7 |           508 |
+|         110 | pratiksha  | raut      | not available |      1234536 | 2015-04-18 |      0 |  19000 |          0 |          8 |           509 |
+|         111 | pratiksha  | raut      | not available |     12534623 | 2017-04-18 |      0 |  44000 |          0 |          9 |           510 |
+|         112 | anamika    | sable     | not available |    234360987 | 2020-03-29 |      0 |  55000 |          0 |         10 |           511 |
+|         113 | kamini     | salunke   | not available |    987654333 | 2021-11-23 |      0 |  77000 |          0 |         11 |           512 |
++-------------+------------+-----------+---------------+--------------+------------+--------+--------+------------+------------+---------------+
+13 rows in set (0.00 sec)
+
+mysql>

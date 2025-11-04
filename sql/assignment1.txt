@@ -1,0 +1,894 @@
+Enter password: ***********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 17
+Server version: 8.0.41 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| bookmangement      |
+| firstbit           |
+| information_schema |
+| mysql              |
+| omsai              |
+| performance_schema |
+| prec               |
+| productdb          |
+| sai                |
+| sys                |
++--------------------+
+10 rows in set (0.01 sec)
+
+mysql> use firstBit;
+Database changed
+mysql> create table country(country_id int,country_name varchar(20),region_id int);
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> show tables;
++--------------------+
+| Tables_in_firstbit |
++--------------------+
+| country            |
+| employee           |
+| student            |
++--------------------+
+3 rows in set (0.00 sec)
+
+mysql> desc country;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| country_id   | int         | YES  |     | NULL    |       |
+| country_name | varchar(20) | YES  |     | NULL    |       |
+| region_id    | int         | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create table jobs(job_id int primary key,job_title varchar(20),min_salary double(10,2),max_salary double(10,2),check(max_salary <=25000);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> create table jobs(job_id int primary key,job_title varchar(20),min_salary double(10,2),max_salary double(10,2),check(max_salary <=25000));
+Query OK, 0 rows affected, 2 warnings (0.03 sec)
+
+mysql> desc jobs;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| job_id     | int          | NO   | PRI | NULL    |       |
+| job_title  | varchar(20)  | YES  |     | NULL    |       |
+| min_salary | double(10,2) | YES  |     | NULL    |       |
+| max_salary | double(10,2) | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> create table job_histry(employee_id int,start_date date,end_date date,job_id int,department_id int);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc job_histry;
++---------------+------+------+-----+---------+-------+
+| Field         | Type | Null | Key | Default | Extra |
++---------------+------+------+-----+---------+-------+
+| employee_id   | int  | YES  |     | NULL    |       |
+| start_date    | date | YES  |     | NULL    |       |
+| end_date      | date | YES  |     | NULL    |       |
+| job_id        | int  | YES  |     | NULL    |       |
+| department_id | int  | YES  |     | NULL    |       |
++---------------+------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table country
+    -> modify column country_id int unique;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc country;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| country_id   | int         | YES  | UNI | NULL    |       |
+| country_name | varchar(20) | YES  |     | NULL    |       |
+| region_id    | int         | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create table jobs(job
+    -> _id int,job_title vachar(20) default 'blank',min_salary float(10,2) default 8000,max_salary float(10,2));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '_id int,job_title vachar(20) default 'blank',min_salary float(10,2) default 8000' at line 2
+mysql>  create table jobs(job_id int,job_title vachar(20) default 'blank',min_salary float(10,2) default 8000,max_salary float(10,2));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'vachar(20) default 'blank',min_salary float(10,2) default 8000,max_salary float(' at line 1
+mysql>  create table jobs(job_id int,job_title varchar(20) default 'blank',min_salary float(10,2) default 8000,max_salary float(10,2));
+ERROR 1050 (42S01): Table 'jobs' already exists
+mysql>  create table job(job_id int,job_title varchar(20) default 'blank',min_salary float(10,2) default 8000,max_salary float(10,2));
+Query OK, 0 rows affected, 2 warnings (0.03 sec)
+
+mysql> desc job;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| job_id     | int         | YES  |     | NULL    |       |
+| job_title  | varchar(20) | YES  |     | blank   |       |
+| min_salary | float(10,2) | YES  |     | 8000.00 |       |
+| max_salary | float(10,2) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> create table department(department_id decimal(4,0),deparment_name varchar(20),manager_id decimal(6,0),location_Id decimal(4,0));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc department;
++----------------+--------------+------+-----+---------+-------+
+| Field          | Type         | Null | Key | Default | Extra |
++----------------+--------------+------+-----+---------+-------+
+| department_id  | decimal(4,0) | YES  |     | NULL    |       |
+| deparment_name | varchar(20)  | YES  |     | NULL    |       |
+| manager_id     | decimal(6,0) | YES  |     | NULL    |       |
+| location_Id    | decimal(4,0) | YES  |     | NULL    |       |
++----------------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table department add primary key(deparment_id) default 0;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'default 0' at line 1
+mysql> alter table department add primary key(deparment_id);
+ERROR 1072 (42000): Key column 'deparment_id' doesn't exist in table
+mysql> alter table department add primary key(department_id) default 0;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'default 0' at line 1
+mysql> alter table department add primary key(department_id);
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table department modify column department_id int not null;
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc department;
++----------------+--------------+------+-----+---------+-------+
+| Field          | Type         | Null | Key | Default | Extra |
++----------------+--------------+------+-----+---------+-------+
+| department_id  | int          | NO   | PRI | NULL    |       |
+| deparment_name | varchar(20)  | YES  |     | NULL    |       |
+| manager_id     | decimal(6,0) | YES  |     | NULL    |       |
+| location_Id    | decimal(4,0) | YES  |     | NULL    |       |
++----------------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table department modify column department_name varchar(20) not null,manager_id decimal(6,0;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'manager_id decimal(6,0' at line 1
+mysql> alter table department modify column department_name varchar(20) not null,manager_id decimal(6,0) not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'manager_id decimal(6,0) not null' at line 1
+mysql> alter table department modify column department_name varchar(20) not null;
+ERROR 1054 (42S22): Unknown column 'department_name' in 'department'
+mysql> alter table department modify column deparment_name varchar(20) not null;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table department modify column manager_id decimal(6,0) not null;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc department;
++----------------+--------------+------+-----+---------+-------+
+| Field          | Type         | Null | Key | Default | Extra |
++----------------+--------------+------+-----+---------+-------+
+| department_id  | int          | NO   | PRI | NULL    |       |
+| deparment_name | varchar(20)  | NO   |     | NULL    |       |
+| manager_id     | decimal(6,0) | NO   |     | NULL    |       |
+| location_Id    | decimal(4,0) | YES  |     | NULL    |       |
++----------------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table department department_id int default 0;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'department_id int default 0' at line 1
+mysql> alter table department department_id int default '0';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'department_id int default '0'' at line 1
+mysql> alter table department modify department_id int default '0';
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc department;
++----------------+--------------+------+-----+---------+-------+
+| Field          | Type         | Null | Key | Default | Extra |
++----------------+--------------+------+-----+---------+-------+
+| department_id  | int          | NO   | PRI | 0       |       |
+| deparment_name | varchar(20)  | NO   |     | NULL    |       |
+| manager_id     | decimal(6,0) | NO   |     | NULL    |       |
+| location_Id    | decimal(4,0) | YES  |     | NULL    |       |
++----------------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table department modify location_id decimal(4,0) default 0;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc department;
++----------------+--------------+------+-----+---------+-------+
+| Field          | Type         | Null | Key | Default | Extra |
++----------------+--------------+------+-----+---------+-------+
+| department_id  | int          | NO   | PRI | 0       |       |
+| deparment_name | varchar(20)  | NO   |     | NULL    |       |
+| manager_id     | decimal(6,0) | NO   |     | NULL    |       |
+| location_id    | decimal(4,0) | YES  |     | 0       |       |
++----------------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table department add primary key(manager_id);
+ERROR 1068 (42000): Multiple primary key defined
+mysql> alter table department add primary key(demartment_id,manager_id);
+ERROR 1068 (42000): Multiple primary key defined
+mysql> drop table department;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc department;
+ERROR 1146 (42S02): Table 'firstbit.department' doesn't exist
+ ysql> create table department(department_id decimal(4,0) default 0,department_name varchar(20),manager_id decimal(6,0),location_Id decimal(4,0) default 0);
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> desc department;
++-----------------+--------------+------+-----+---------+-------+
+| Field           | Type         | Null | Key | Default | Extra |
++-----------------+--------------+------+-----+---------+-------+
+| department_id   | decimal(4,0) | YES  |     | 0       |       |
+| department_name | varchar(20)  | YES  |     | NULL    |       |
+| manager_id      | decimal(6,0) | YES  |     | NULL    |       |
+| location_Id     | decimal(4,0) | YES  |     | 0       |       |
++-----------------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table department add primary key(demartment_id,manager_id);
+ERROR 1072 (42000): Key column 'demartment_id' doesn't exist in table
+mysql> alter table department add primary key(department_id,manager_id);
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc department;
++-----------------+--------------+------+-----+---------+-------+
+| Field           | Type         | Null | Key | Default | Extra |
++-----------------+--------------+------+-----+---------+-------+
+| department_id   | decimal(4,0) | NO   | PRI | 0       |       |
+| department_name | varchar(20)  | YES  |     | NULL    |       |
+| manager_id      | decimal(6,0) | NO   | PRI | NULL    |       |
+| location_Id     | decimal(4,0) | YES  |     | 0       |       |
++-----------------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table department modify column deparment_name varchar(20) not null;
+ERROR 1054 (42S22): Unknown column 'deparment_name' in 'department'
+mysql> alter table department modify column department_name varchar(20) not null;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc department;
++-----------------+--------------+------+-----+---------+-------+
+| Field           | Type         | Null | Key | Default | Extra |
++-----------------+--------------+------+-----+---------+-------+
+| department_id   | decimal(4,0) | NO   | PRI | 0       |       |
+| department_name | varchar(20)  | NO   |     | NULL    |       |
+| manager_id      | decimal(6,0) | NO   | PRI | NULL    |       |
+| location_Id     | decimal(4,0) | YES  |     | 0       |       |
++-----------------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+Enter password: ***********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 19
+Server version: 8.0.41 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases
+    -> ;
++--------------------+
+| Database           |
++--------------------+
+| bookmangement      |
+| firstbit           |
+| information_schema |
+| mysql              |
+| omsai              |
+| performance_schema |
+| prec               |
+| productdb          |
+| sai                |
+| sys                |
++--------------------+
+10 rows in set (0.00 sec)
+
+mysql> use firstBit;
+Database changed
+mysql> show tables;
++--------------------+
+| Tables_in_firstbit |
++--------------------+
+| country            |
+| department         |
+| employee           |
+| job                |
+| job_histry         |
+| jobs               |
+| student            |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> desc department;
++-----------------+--------------+------+-----+---------+-------+
+| Field           | Type         | Null | Key | Default | Extra |
++-----------------+--------------+------+-----+---------+-------+
+| department_id   | decimal(4,0) | NO   | PRI | 0       |       |
+| department_name | varchar(20)  | NO   |     | NULL    |       |
+| manager_id      | decimal(6,0) | NO   | PRI | NULL    |       |
+| location_Id     | decimal(4,0) | YES  |     | 0       |       |
++-----------------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> desc employee;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| emailid | int         | YES  |     | NULL    |       |
+| id      | int         | NO   | PRI | NULL    |       |
+| name    | varchar(20) | NO   |     | NULL    |       |
+| dept    | varchar(20) | YES  |     | it      |       |
+| salary  | int         | YES  |     | NULL    |       |
+| gender  | char(1)     | YES  |     | NULL    |       |
+| j_date  | date        | YES  |     | NULL    |       |
+| age     | int         | YES  | UNI | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> create table employees(employee id int,first_name varchar(20),last_name varchar(20),
+    -> email varchar(20),phone_number int, hire_date date,job_id int,salary float(7,0),
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'id int,first_name varchar(20),last_name varchar(20),
+email varchar(20),phone_num' at line 1
+mysql> create table employees(employee_id int,first_name varchar(20),last_name varchar(20),
+    -> email varchar(20),phone_number int, hire_date date,job_id int,salary float(7,0),
+    -> commission int, manager_id decimal(4,0),department_id decimal(4,0));
+Query OK, 0 rows affected, 1 warning (0.04 sec)
+
+mysql> show employees;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'employees' at line 1
+mysql> desc employees;
++---------------+--------------+------+-----+---------+-------+
+| Field         | Type         | Null | Key | Default | Extra |
++---------------+--------------+------+-----+---------+-------+
+| employee_id   | int          | YES  |     | NULL    |       |
+| first_name    | varchar(20)  | YES  |     | NULL    |       |
+| last_name     | varchar(20)  | YES  |     | NULL    |       |
+| email         | varchar(20)  | YES  |     | NULL    |       |
+| phone_number  | int          | YES  |     | NULL    |       |
+| hire_date     | date         | YES  |     | NULL    |       |
+| job_id        | int          | YES  |     | NULL    |       |
+| salary        | float(7,0)   | YES  |     | NULL    |       |
+| commission    | int          | YES  |     | NULL    |       |
+| manager_id    | decimal(4,0) | YES  |     | NULL    |       |
+| department_id | decimal(4,0) | YES  |     | NULL    |       |
++---------------+--------------+------+-----+---------+-------+
+11 rows in set (0.00 sec)
+
+mysql> alter table employee
+    -> add primary key(employee_id);
+ERROR 1068 (42000): Multiple primary key defined
+mysql> alter table employees
+    -> add primary key(employee_id);
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> decs employees;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'decs employees' at line 1
+mysql> desc employees;
++---------------+--------------+------+-----+---------+-------+
+| Field         | Type         | Null | Key | Default | Extra |
++---------------+--------------+------+-----+---------+-------+
+| employee_id   | int          | NO   | PRI | NULL    |       |
+| first_name    | varchar(20)  | YES  |     | NULL    |       |
+| last_name     | varchar(20)  | YES  |     | NULL    |       |
+| email         | varchar(20)  | YES  |     | NULL    |       |
+| phone_number  | int          | YES  |     | NULL    |       |
+| hire_date     | date         | YES  |     | NULL    |       |
+| job_id        | int          | YES  |     | NULL    |       |
+| salary        | float(7,0)   | YES  |     | NULL    |       |
+| commission    | int          | YES  |     | NULL    |       |
+| manager_id    | decimal(4,0) | YES  |     | NULL    |       |
+| department_id | decimal(4,0) | YES  |     | NULL    |       |
++---------------+--------------+------+-----+---------+-------+
+11 rows in set (0.00 sec)
+
+mysql> alter table employees
+    -> add foreigen key(department id,manager_id)
+    -> references department(department id,manager_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key(department id,manager_id)
+references department(department id,manager_id)' at line 2
+mysql> alter table employees
+    -> add foreigen key(department_id,manager_id)
+    -> references department(department_id,manager_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key(department_id,manager_id)
+references department(department_id,manager_id)' at line 2
+mysql> alter table employees
+    -> add foregin key(department id,manager_id)
+    -> references department(department_id,manager_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key(department id,manager_id)
+references department(department_id,manager_id)' at line 2
+mysql> alter table employees
+    -> add foregin key(department_id,manager_id)
+    -> references department(department_id,manager_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key(department_id,manager_id)
+references department(department_id,manager_id)' at line 2
+mysql> insert into employees(employee_id,first_name,last_name,email,phone_number,hire_date,job_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> insert into employees(employee_id,first_name,last_name,email,phone_number,hire_date,job_id)
+    -> value(101,"vijeta","badakh","v@gmail.com",214354657,"2025-09-15",10);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> desc employees;
++---------------+--------------+------+-----+---------+-------+
+| Field         | Type         | Null | Key | Default | Extra |
++---------------+--------------+------+-----+---------+-------+
+| employee_id   | int          | NO   | PRI | NULL    |       |
+| first_name    | varchar(20)  | YES  |     | NULL    |       |
+| last_name     | varchar(20)  | YES  |     | NULL    |       |
+| email         | varchar(20)  | YES  |     | NULL    |       |
+| phone_number  | int          | YES  |     | NULL    |       |
+| hire_date     | date         | YES  |     | NULL    |       |
+| job_id        | int          | YES  |     | NULL    |       |
+| salary        | float(7,0)   | YES  |     | NULL    |       |
+| commission    | int          | YES  |     | NULL    |       |
+| manager_id    | decimal(4,0) | YES  |     | NULL    |       |
+| department_id | decimal(4,0) | YES  |     | NULL    |       |
++---------------+--------------+------+-----+---------+-------+
+11 rows in set (0.00 sec)
+
+mysql> table employees;
++-------------+------------+-----------+-------------+--------------+------------+--------+--------+------------+------------+---------------+
+| employee_id | first_name | last_name | email       | phone_number | hire_date  | job_id | salary | commission | manager_id | department_id |
++-------------+------------+-----------+-------------+--------------+------------+--------+--------+------------+------------+---------------+
+|         101 | vijeta     | badakh    | v@gmail.com |    214354657 | 2025-09-15 |     10 |   NULL |       NULL |       NULL |          NULL |
++-------------+------------+-----------+-------------+--------------+------------+--------+--------+------------+------------+---------------+
+1 row in set (0.00 sec)
+
+mysql> insert into department( department_id, department_name,manager_id, location_Id)
+    -> value(1,"it",01,501);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into department( department_id, department_name,manager_id, location_Id)
+    -> value(2,"hr",02,502);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> table employees;
++-------------+------------+-----------+-------------+--------------+------------+--------+--------+------------+------------+---------------+
+| employee_id | first_name | last_name | email       | phone_number | hire_date  | job_id | salary | commission | manager_id | department_id |
++-------------+------------+-----------+-------------+--------------+------------+--------+--------+------------+------------+---------------+
+|         101 | vijeta     | badakh    | v@gmail.com |    214354657 | 2025-09-15 |     10 |   NULL |       NULL |       NULL |          NULL |
++-------------+------------+-----------+-------------+--------------+------------+--------+--------+------------+------------+---------------+
+1 row in set (0.00 sec)
+
+mysql> table department;
++---------------+-----------------+------------+-------------+
+| department_id | department_name | manager_id | location_Id |
++---------------+-----------------+------------+-------------+
+|             1 | it              |          1 |         501 |
+|             2 | hr              |          2 |         502 |
++---------------+-----------------+------------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> insert into employees(salary,commission,manger_id,department_id)
+    -> value(24000.0,2000,1,1);
+ERROR 1054 (42S22): Unknown column 'manger_id' in 'field list'
+mysql> insert into employees(salary,commission,manager_id,department_id)
+    -> value(24000.0,2000,1,1);
+ERROR 1364 (HY000): Field 'employee_id' doesn't have a default value
+mysql> delete from table employees;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table employees' at line 1
+mysql> delete from employees;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> table employees;
+Empty set (0.00 sec)
+
+mysql> insert into employees(employee_id,first_name,last_name,email,phone_number,hire_date,job_id,salary,manager)
+    ->
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> insert into employees(employee_id,first_name,last_name,email,phone_number,hire_date,job_id,salary,manager_id,department_id)
+    -> value(101,"vijeta","badakh","v@gmail.com",214354657,"2025-09-15",10,28000.00,1,501);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employees(employee_id,first_name,last_name,email,phone_number,hire_date,job_id,salary,manager_id,department_id)
+    -> value(102,"nikita","badakh","n@gmail.com",214354879,"2025-09-26",20,23000.00,2,502);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> table employees;
++-------------+------------+-----------+-------------+--------------+------------+--------+--------+------------+------------+---------------+
+| employee_id | first_name | last_name | email       | phone_number | hire_date  | job_id | salary | commission | manager_id | department_id |
++-------------+------------+-----------+-------------+--------------+------------+--------+--------+------------+------------+---------------+
+|         101 | vijeta     | badakh    | v@gmail.com |    214354657 | 2025-09-15 |     10 |  28000 |       NULL |          1 |           501 |
+|         102 | nikita     | badakh    | n@gmail.com |    214354879 | 2025-09-26 |     20 |  23000 |       NULL |          2 |           502 |
++-------------+------------+-----------+-------------+--------------+------------+--------+--------+------------+------------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> delete from department;
+Query OK, 2 rows affected (0.01 sec)
+
+mysql> insert into department( department_id, department_name,manager_id, location_Id)
+    -> value(501,"it",1,601);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into department( department_id, department_name,manager_id, location_Id)
+    -> value(502,"hr",2,602);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> table department;
++---------------+-----------------+------------+-------------+
+| department_id | department_name | manager_id | location_Id |
++---------------+-----------------+------------+-------------+
+|           501 | it              |          1 |         601 |
+|           502 | hr              |          2 |         602 |
++---------------+-----------------+------------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> alter table employees
+    -> add foregin key(department_id,manager_id)
+    ->  references department(department_id,manager_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key(department_id,manager_id)
+ references department(department_id,manager_id)' at line 2
+mysql> alter table employees
+    -> add foregin key(manager_id,department_id)
+    ->  references department(department_id,manager_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key(manager_id,department_id)
+ references department(department_id,manager_id)' at line 2
+mysql> alter table employees
+    -> add foregin key(manager_id,department_id)
+    ->  references department(manager_id,department_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key(manager_id,department_id)
+ references department(manager_id,department_id)' at line 2
+mysql> alter table employees
+    -> add foregin key(department_id,manager_id)
+    ->  references department(department_id,manager_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key(department_id,manager_id)
+ references department(department_id,manager_id)' at line 2
+mysql> alter table dapartment
+    -> ;
+ERROR 1146 (42S02): Table 'firstbit.dapartment' doesn't exist
+mysql> alter table dapartment
+    -> add foregin key(department_id,manager_id)
+    ->  references department(department_id,manager_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key(department_id,manager_id)
+ references department(department_id,manager_id)' at line 2
+mysql> desc department;
++-----------------+--------------+------+-----+---------+-------+
+| Field           | Type         | Null | Key | Default | Extra |
++-----------------+--------------+------+-----+---------+-------+
+| department_id   | decimal(4,0) | NO   | PRI | 0       |       |
+| department_name | varchar(20)  | NO   |     | NULL    |       |
+| manager_id      | decimal(6,0) | NO   | PRI | NULL    |       |
+| location_Id     | decimal(4,0) | YES  |     | 0       |       |
++-----------------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> delete department;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> delete from department;
+Query OK, 2 rows affected (0.01 sec)
+
+mysql> alter table dapartment
+    -> change colume department_id manager_id decimal(6,0);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'manager_id decimal(6,0)' at line 2
+mysql> alter table dapartment
+    -> change column department_id manager_id decimal(6,0);
+ERROR 1146 (42S02): Table 'firstbit.dapartment' doesn't exist
+mysql> alter table department
+    -> change column department_id manager_id decimal(6,0);
+ERROR 1060 (42S21): Duplicate column name 'manager_id'
+mysql> alter table dapartment
+    -> change colume department_id manager_id decimal(6,0),
+    -> change colume  manager_id department_id decimal(4,0),
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'manager_id decimal(6,0),
+change colume  manager_id department_id decimal(4,0),' at line 2
+mysql> alter table dapartment
+    -> change colume department_id manager_id decimal(6,0),
+    -> change colume  manager_id department_id decimal(4,0);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'manager_id decimal(6,0),
+change colume  manager_id department_id decimal(4,0)' at line 2
+mysql> alter table dapartment
+    -> change column  manager_id department_id decimal(4,0),
+    -> change column department_id manager_id decimal(6,0);
+ERROR 1146 (42S02): Table 'firstbit.dapartment' doesn't exist
+mysql> alter table department
+    -> change column  manager_id department_id decimal(4,0),
+    -> change column department_id manager_id decimal(6,0);
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into department(manager_id, department_name,department_id,location_Id)
+    -> value(1,"it",501,601);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into department(manager_id, department_name,department_id,location_Id)
+    -> value(2,"hr",502,602);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> table department;
++------------+-----------------+---------------+-------------+
+| manager_id | department_name | department_id | location_Id |
++------------+-----------------+---------------+-------------+
+|          1 | it              |           501 |         601 |
+|          2 | hr              |           502 |         602 |
++------------+-----------------+---------------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> table employees;
++-------------+------------+-----------+-------------+--------------+------------+--------+--------+------------+------------+---------------+
+| employee_id | first_name | last_name | email       | phone_number | hire_date  | job_id | salary | commission | manager_id | department_id |
++-------------+------------+-----------+-------------+--------------+------------+--------+--------+------------+------------+---------------+
+|         101 | vijeta     | badakh    | v@gmail.com |    214354657 | 2025-09-15 |     10 |  28000 |       NULL |          1 |           501 |
+|         102 | nikita     | badakh    | n@gmail.com |    214354879 | 2025-09-26 |     20 |  23000 |       NULL |          2 |           502 |
++-------------+------------+-----------+-------------+--------------+------------+--------+--------+------------+------------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> alter table employees
+    -> add foregin key(manager_id,department_id)
+    ->  references department(manager_id,manager_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key(manager_id,department_id)
+ references department(manager_id,manager_id)' at line 2
+mysql> alter table employees
+    -> add foreign key(manager_id,department_id)
+    ->
+    ->  references department(manager_id,manager_id);
+ERROR 1822 (HY000): Failed to add the foreign key constraint. Missing index for constraint 'employees_ibfk_1' in the referenced table 'department'
+mysql> alter table employees
+    -> add foreign key(manager_id,department_id)
+    ->  references department(manager_id,manager_id);
+ERROR 1822 (HY000): Failed to add the foreign key constraint. Missing index for constraint 'employees_ibfk_1' in the referenced table 'department'
+mysql> desc department;
++-----------------+--------------+------+-----+---------+-------+
+| Field           | Type         | Null | Key | Default | Extra |
++-----------------+--------------+------+-----+---------+-------+
+| manager_id      | decimal(6,0) | NO   | PRI | NULL    |       |
+| department_name | varchar(20)  | NO   |     | NULL    |       |
+| department_id   | decimal(4,0) | NO   | PRI | NULL    |       |
+| location_Id     | decimal(4,0) | YES  |     | 0       |       |
++-----------------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table employees
+    -> add foreign key(manager_id,department_id)
+    ->  references department(department_id,manager_id);
+ERROR 1822 (HY000): Failed to add the foreign key constraint. Missing index for constraint 'employees_ibfk_1' in the referenced table 'department'
+mysql>
+mysql> use firstBit
+Database changed
+mysql> table student;
++--------+---------+------+------------+------+-----------+
+| rollno | name    | mark | city       | age  | mobno     |
++--------+---------+------+------------+------+-----------+
+|      1 | vijeta  |   60 | shrirampur |   21 |  32436547 |
+|      2 | nikita  |   70 | malunje    |   22 | 456758678 |
+|      3 | krutika |   80 | pultamba   |   23 |    534657 |
+|      4 | dipali  |   30 | nevasa     |   22 | 324121547 |
+|      5 | manjiri |   80 | panegav    |   20 |  25436457 |
++--------+---------+------+------------+------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> desc student;
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| rollno | int         | NO   | PRI | NULL    | auto_increment |
+| name   | varchar(20) | YES  |     | NULL    |                |
+| mark   | tinyint     | YES  |     | NULL    |                |
+| city   | varchar(20) | YES  |     | NULL    |                |
+| age    | int         | YES  |     | NULL    |                |
+| mobno  | int         | YES  |     | NULL    |                |
++--------+-------------+------+-----+---------+----------------+
+6 rows in set (0.01 sec)
+
+mysql> alter table student
+    -> modify column rollno int auto_increment;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into student("vaishanavi",50,"loni",22,124365457);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"vaishanavi",50,"loni",22,124365457)' at line 1
+mysql> insert into student value("vaishanavi",50,"loni",22,124365457);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into student values(6,"vaishanavi",50,"loni",22,124365457);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> alter table student
+    -> modify cloume rollno int auto_increment;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'rollno int auto_increment' at line 2
+mysql> alter table student
+    -> modify cloumn rollno int auto_increment;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'rollno int auto_increment' at line 2
+mysql> alter table student
+    -> modify column rollno int auto_increment;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into student values("pratiksha",56,"parner",22,124365457);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into student values(1,"pratiksha",56,"parner",22,124365457);
+ERROR 1062 (23000): Duplicate entry '1' for key 'student.PRIMARY'
+mysql> insert into student values("pratiksha",56,"parner",22,124365457);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> table student;
++--------+------------+------+------------+------+-----------+
+| rollno | name       | mark | city       | age  | mobno     |
++--------+------------+------+------------+------+-----------+
+|      1 | vijeta     |   60 | shrirampur |   21 |  32436547 |
+|      2 | nikita     |   70 | malunje    |   22 | 456758678 |
+|      3 | krutika    |   80 | pultamba   |   23 |    534657 |
+|      4 | dipali     |   30 | nevasa     |   22 | 324121547 |
+|      5 | manjiri    |   80 | panegav    |   20 |  25436457 |
+|      6 | vaishanavi |   50 | loni       |   22 | 124365457 |
++--------+------------+------+------------+------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> insert into student(rollno,name,mark,city,age,mobno)
+    -> value("pratiksha",88,"parner",22,32545658);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into student(rollno,name,mark,city,age,mobno)
+    -> values("pratiksha",88,"parner",22,32545658);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into student(rollno,name,mark,city,age,mobno)
+    -> values(2,"pratiksha",88,"parner",22,32545658);
+ERROR 1062 (23000): Duplicate entry '2' for key 'student.PRIMARY'
+mysql> insert into student(rollno,name,mark,city,age,mobno)
+    -> values(7,"pratiksha",88,"parner",22,32545658);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student(rollno,name,mark,city,age,mobno)
+    -> values("pratiksha",88,"parner",22,32545658);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into student(name,mark,city,age,mobno)
+    -> values("pratiksha",88,"parner",22,32545658);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> table student;
++--------+------------+------+------------+------+-----------+
+| rollno | name       | mark | city       | age  | mobno     |
++--------+------------+------+------------+------+-----------+
+|      1 | vijeta     |   60 | shrirampur |   21 |  32436547 |
+|      2 | nikita     |   70 | malunje    |   22 | 456758678 |
+|      3 | krutika    |   80 | pultamba   |   23 |    534657 |
+|      4 | dipali     |   30 | nevasa     |   22 | 324121547 |
+|      5 | manjiri    |   80 | panegav    |   20 |  25436457 |
+|      6 | vaishanavi |   50 | loni       |   22 | 124365457 |
+|      7 | pratiksha  |   88 | parner     |   22 |  32545658 |
+|      8 | pratiksha  |   88 | parner     |   22 |  32545658 |
++--------+------------+------+------------+------+-----------+
+8 rows in set (0.00 sec)
+
+mysql> insert into student values("tirta",55,"rahuri",3,3547658);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into student values("9,tirta",55,"rahuri",3,3547658);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into student values(9,"tirta",55,"rahuri",3,3547658);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> update student set city="malunje"
+    -> where id=1;
+ERROR 1054 (42S22): Unknown column 'id' in 'where clause'
+mysql> update student set city="malunje"
+    -> where rollno=1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> table student;
++--------+------------+------+----------+------+-----------+
+| rollno | name       | mark | city     | age  | mobno     |
++--------+------------+------+----------+------+-----------+
+|      1 | vijeta     |   60 | malunje  |   21 |  32436547 |
+|      2 | nikita     |   70 | malunje  |   22 | 456758678 |
+|      3 | krutika    |   80 | pultamba |   23 |    534657 |
+|      4 | dipali     |   30 | nevasa   |   22 | 324121547 |
+|      5 | manjiri    |   80 | panegav  |   20 |  25436457 |
+|      6 | vaishanavi |   50 | loni     |   22 | 124365457 |
+|      7 | pratiksha  |   88 | parner   |   22 |  32545658 |
+|      8 | pratiksha  |   88 | parner   |   22 |  32545658 |
+|      9 | tirta      |   55 | rahuri   |    3 |   3547658 |
++--------+------------+------+----------+------+-----------+
+9 rows in set (0.00 sec)
+
+mysql> delete from student where rollno=9;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> table student;
++--------+------------+------+----------+------+-----------+
+| rollno | name       | mark | city     | age  | mobno     |
++--------+------------+------+----------+------+-----------+
+|      1 | vijeta     |   60 | malunje  |   21 |  32436547 |
+|      2 | nikita     |   70 | malunje  |   22 | 456758678 |
+|      3 | krutika    |   80 | pultamba |   23 |    534657 |
+|      4 | dipali     |   30 | nevasa   |   22 | 324121547 |
+|      5 | manjiri    |   80 | panegav  |   20 |  25436457 |
+|      6 | vaishanavi |   50 | loni     |   22 | 124365457 |
+|      7 | pratiksha  |   88 | parner   |   22 |  32545658 |
+|      8 | pratiksha  |   88 | parner   |   22 |  32545658 |
++--------+------------+------+----------+------+-----------+
+8 rows in set (0.00 sec)
+
+mysql> create table student1 as(select*from student);
+Query OK, 8 rows affected (0.03 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> table student;
++--------+------------+------+----------+------+-----------+
+| rollno | name       | mark | city     | age  | mobno     |
++--------+------------+------+----------+------+-----------+
+|      1 | vijeta     |   60 | malunje  |   21 |  32436547 |
+|      2 | nikita     |   70 | malunje  |   22 | 456758678 |
+|      3 | krutika    |   80 | pultamba |   23 |    534657 |
+|      4 | dipali     |   30 | nevasa   |   22 | 324121547 |
+|      5 | manjiri    |   80 | panegav  |   20 |  25436457 |
+|      6 | vaishanavi |   50 | loni     |   22 | 124365457 |
+|      7 | pratiksha  |   88 | parner   |   22 |  32545658 |
+|      8 | pratiksha  |   88 | parner   |   22 |  32545658 |
++--------+------------+------+----------+------+-----------+
+8 rows in set (0.00 sec)
+
+mysql> table student1;
++--------+------------+------+----------+------+-----------+
+| rollno | name       | mark | city     | age  | mobno     |
++--------+------------+------+----------+------+-----------+
+|      1 | vijeta     |   60 | malunje  |   21 |  32436547 |
+|      2 | nikita     |   70 | malunje  |   22 | 456758678 |
+|      3 | krutika    |   80 | pultamba |   23 |    534657 |
+|      4 | dipali     |   30 | nevasa   |   22 | 324121547 |
+|      5 | manjiri    |   80 | panegav  |   20 |  25436457 |
+|      6 | vaishanavi |   50 | loni     |   22 | 124365457 |
+|      7 | pratiksha  |   88 | parner   |   22 |  32545658 |
+|      8 | pratiksha  |   88 | parner   |   22 |  32545658 |
++--------+------------+------+----------+------+-----------+
+8 rows in set (0.00 sec)
+
+mysql> drop table student1;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> table student1;
+ERROR 1146 (42S02): Table 'firstbit.student1' doesn't exist
+mysql> desc student1;
+ERROR 1146 (42S02): Table 'firstbit.student1' doesn't exist
+mysql> create table student2 as(select*from student);
+Query OK, 8 rows affected (0.03 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> turncate student2;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'turncate student2' at line 1
+mysql> truncate student2;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> desc student2;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| rollno | int         | NO   |     | 0       |       |
+| name   | varchar(20) | YES  |     | NULL    |       |
+| mark   | tinyint     | YES  |     | NULL    |       |
+| city   | varchar(20) | YES  |     | NULL    |       |
+| age    | int         | YES  |     | NULL    |       |
+| mobno  | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> drop student2;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'student2' at line 1
+mysql> drop table student2;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc student2;
+ERROR 1146 (42S02): Table 'firstbit.student2' doesn't exist
+mysql>
