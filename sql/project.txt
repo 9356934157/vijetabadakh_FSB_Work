@@ -1,0 +1,507 @@
+mysql> create database airline;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| airline            |
+| bookmangement      |
+| firstbit           |
+| information_schema |
+| mysql              |
+| omsai              |
+| performance_schema |
+| prec               |
+| productdb          |
+| sai                |
+| sys                |
++--------------------+
+11 rows in set (0.01 sec)
+
+mysql> use airline
+Database changed
+mysql> CREATE TABLE Aircraft (
+    ->   aircraft_id INT AUTO_INCREMENT PRIMARY KEY,
+    ->   registration_no VARCHAR(20) UNIQUE NOT NULL,
+    ->   model VARCHAR(50),
+    ->   total_seats INT
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> INSERT INTO Aircraft (registration_no, model, total_seats) VALUES
+    -> ('VT-AL1', 'Airbus A320', 180),
+    -> ('VT-AL2', 'Boeing 737', 160),
+    -> ('VT-AL3', 'Airbus A321', 190),
+    -> ('VT-AL4', 'Boeing 787', 250),
+    -> ('VT-AL5', 'ATR 72', 70),
+    -> ('VT-AL6', 'Boeing 777', 300),
+    -> ('VT-AL7', 'Airbus A350', 320),
+    -> ('VT-AL8', 'Boeing 747', 400),
+    -> ('VT-AL9', 'Embraer 190', 100),
+    -> ('VT-AL10', 'Bombardier Q400', 80),
+    -> ('VT-AL11', 'Airbus A319', 150),
+    -> ('VT-AL12', 'Boeing 757', 200),
+    -> ('VT-AL13', 'Airbus A330', 260),
+    -> ('VT-AL14', 'Boeing 767', 290),
+    -> ('VT-AL15', 'Airbus A340', 300),
+    -> ('VT-AL16', 'Boeing 727', 180),
+    -> ('VT-AL17', 'Embraer 175', 90),
+    -> ('VT-AL18', 'Boeing 707', 150),
+    -> ('VT-AL19', 'Airbus A310', 250),
+    -> ('VT-AL20', 'Bombardier CRJ900', 85);
+Query OK, 20 rows affected (0.01 sec)
+Records: 20  Duplicates: 0  Warnings: 0
+
+mysql> select*from aircraft;
++-------------+-----------------+-------------------+-------------+
+| aircraft_id | registration_no | model             | total_seats |
++-------------+-----------------+-------------------+-------------+
+|           1 | VT-AL1          | Airbus A320       |         180 |
+|           2 | VT-AL2          | Boeing 737        |         160 |
+|           3 | VT-AL3          | Airbus A321       |         190 |
+|           4 | VT-AL4          | Boeing 787        |         250 |
+|           5 | VT-AL5          | ATR 72            |          70 |
+|           6 | VT-AL6          | Boeing 777        |         300 |
+|           7 | VT-AL7          | Airbus A350       |         320 |
+|           8 | VT-AL8          | Boeing 747        |         400 |
+|           9 | VT-AL9          | Embraer 190       |         100 |
+|          10 | VT-AL10         | Bombardier Q400   |          80 |
+|          11 | VT-AL11         | Airbus A319       |         150 |
+|          12 | VT-AL12         | Boeing 757        |         200 |
+|          13 | VT-AL13         | Airbus A330       |         260 |
+|          14 | VT-AL14         | Boeing 767        |         290 |
+|          15 | VT-AL15         | Airbus A340       |         300 |
+|          16 | VT-AL16         | Boeing 727        |         180 |
+|          17 | VT-AL17         | Embraer 175       |          90 |
+|          18 | VT-AL18         | Boeing 707        |         150 |
+|          19 | VT-AL19         | Airbus A310       |         250 |
+|          20 | VT-AL20         | Bombardier CRJ900 |          85 |
++-------------+-----------------+-------------------+-------------+
+20 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Flight (
+    ->   flight_id INT AUTO_INCREMENT PRIMARY KEY,
+    ->   flight_no VARCHAR(10) UNIQUE NOT NULL,
+    ->   origin VARCHAR(50),
+    ->   destination VARCHAR(50),
+    ->   departure_time DATETIME,
+    ->   arrival_time DATETIME,
+    ->   aircraft_id INT,
+    ->   FOREIGN KEY (aircraft_id) REFERENCES Aircraft(aircraft_id)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> INSERT INTO Flight (flight_no, origin, destination, departure_time, arrival_time, aircraft_id) VALUES
+    -> ('AI101', 'Mumbai', 'Delhi', '2025-10-11 06:00', '2025-10-11 08:00', 1),
+    -> ('AI102', 'Delhi', 'Chennai', '2025-10-11 09:00', '2025-10-11 11:30', 2),
+    -> ('AI103', 'Bangalore', 'Kolkata', '2025-10-11 07:30', '2025-10-11 10:15', 3),
+    -> ('AI104', 'Mumbai', 'Goa', '2025-10-11 12:00', '2025-10-11 13:10', 4),
+    -> ('AI105', 'Delhi', 'Hyderabad', '2025-10-11 15:00', '2025-10-11 17:00', 5),
+    -> ('AI106', 'Kolkata', 'Delhi', '2025-10-11 09:30', '2025-10-11 12:15', 6),
+    -> ('AI107', 'Pune', 'Bangalore', '2025-10-11 05:45', '2025-10-11 07:15', 7),
+    -> ('AI108', 'Goa', 'Mumbai', '2025-10-11 18:00', '2025-10-11 19:10', 8),
+    -> ('AI109', 'Hyderabad', 'Chennai', '2025-10-11 20:00', '2025-10-11 21:30', 9),
+    -> ('AI110', 'Chennai', 'Pune', '2025-10-11 22:00', '2025-10-11 23:45', 10),
+    -> ('AI111', 'Delhi', 'Mumbai', '2025-10-12 06:30', '2025-10-12 08:30', 11),
+    -> ('AI112', 'Hyderabad', 'Kolkata', '2025-10-12 09:00', '2025-10-12 11:40', 12),
+    -> ('AI113', 'Bangalore', 'Pune', '2025-10-12 13:00', '2025-10-12 14:20', 13),
+    -> ('AI114', 'Goa', 'Delhi', '2025-10-12 15:30', '2025-10-12 17:50', 14),
+    -> ('AI115', 'Chennai', 'Mumbai', '2025-10-12 18:00', '2025-10-12 20:15', 15),
+    -> ('AI116', 'Kolkata', 'Bangalore', '2025-10-12 21:00', '2025-10-12 23:30', 16),
+    -> ('AI117', 'Delhi', 'Goa', '2025-10-13 05:30', '2025-10-13 07:30', 17),
+    -> ('AI118', 'Pune', 'Hyderabad', '2025-10-13 08:00', '2025-10-13 09:15', 18),
+    -> ('AI119', 'Mumbai', 'Chennai', '2025-10-13 10:00', '2025-10-13 12:10', 19),
+    -> ('AI120', 'Bangalore', 'Delhi', '2025-10-13 13:30', '2025-10-13 16:00', 20);
+Query OK, 20 rows affected (0.01 sec)
+Records: 20  Duplicates: 0  Warnings: 0
+
+mysql> select*from flight;
++-----------+-----------+-----------+-------------+---------------------+---------------------+-------------+
+| flight_id | flight_no | origin    | destination | departure_time      | arrival_time        | aircraft_id |
++-----------+-----------+-----------+-------------+---------------------+---------------------+-------------+
+|         1 | AI101     | Mumbai    | Delhi       | 2025-10-11 06:00:00 | 2025-10-11 08:00:00 |           1 |
+|         2 | AI102     | Delhi     | Chennai     | 2025-10-11 09:00:00 | 2025-10-11 11:30:00 |           2 |
+|         3 | AI103     | Bangalore | Kolkata     | 2025-10-11 07:30:00 | 2025-10-11 10:15:00 |           3 |
+|         4 | AI104     | Mumbai    | Goa         | 2025-10-11 12:00:00 | 2025-10-11 13:10:00 |           4 |
+|         5 | AI105     | Delhi     | Hyderabad   | 2025-10-11 15:00:00 | 2025-10-11 17:00:00 |           5 |
+|         6 | AI106     | Kolkata   | Delhi       | 2025-10-11 09:30:00 | 2025-10-11 12:15:00 |           6 |
+|         7 | AI107     | Pune      | Bangalore   | 2025-10-11 05:45:00 | 2025-10-11 07:15:00 |           7 |
+|         8 | AI108     | Goa       | Mumbai      | 2025-10-11 18:00:00 | 2025-10-11 19:10:00 |           8 |
+|         9 | AI109     | Hyderabad | Chennai     | 2025-10-11 20:00:00 | 2025-10-11 21:30:00 |           9 |
+|        10 | AI110     | Chennai   | Pune        | 2025-10-11 22:00:00 | 2025-10-11 23:45:00 |          10 |
+|        11 | AI111     | Delhi     | Mumbai      | 2025-10-12 06:30:00 | 2025-10-12 08:30:00 |          11 |
+|        12 | AI112     | Hyderabad | Kolkata     | 2025-10-12 09:00:00 | 2025-10-12 11:40:00 |          12 |
+|        13 | AI113     | Bangalore | Pune        | 2025-10-12 13:00:00 | 2025-10-12 14:20:00 |          13 |
+|        14 | AI114     | Goa       | Delhi       | 2025-10-12 15:30:00 | 2025-10-12 17:50:00 |          14 |
+|        15 | AI115     | Chennai   | Mumbai      | 2025-10-12 18:00:00 | 2025-10-12 20:15:00 |          15 |
+|        16 | AI116     | Kolkata   | Bangalore   | 2025-10-12 21:00:00 | 2025-10-12 23:30:00 |          16 |
+|        17 | AI117     | Delhi     | Goa         | 2025-10-13 05:30:00 | 2025-10-13 07:30:00 |          17 |
+|        18 | AI118     | Pune      | Hyderabad   | 2025-10-13 08:00:00 | 2025-10-13 09:15:00 |          18 |
+|        19 | AI119     | Mumbai    | Chennai     | 2025-10-13 10:00:00 | 2025-10-13 12:10:00 |          19 |
+|        20 | AI120     | Bangalore | Delhi       | 2025-10-13 13:30:00 | 2025-10-13 16:00:00 |          20 |
++-----------+-----------+-----------+-------------+---------------------+---------------------+-------------+
+20 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Passenger (
+    ->   passenger_id INT AUTO_INCREMENT PRIMARY KEY,
+    ->   first_name VARCHAR(50),
+    ->   last_name VARCHAR(50),
+    ->   email VARCHAR(100),
+    ->   phone VARCHAR(15),
+    ->   seat_preference VARCHAR(10)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO Passenger (first_name, last_name, email, phone, seat_preference) VALUES
+    -> ('Ravi', 'Kumar', 'ravi@mail.com', '9876543210', 'Window'),
+    -> ('Sneha', 'Patil', 'sneha@mail.com', '9876543211', 'Aisle'),
+    -> ('Amit', 'Sharma', 'amit@mail.com', '9876543212', 'Window'),
+    -> ('Priya', 'Verma', 'priya@mail.com', '9876543213', 'Aisle'),
+    -> ('Rahul', 'Gupta', 'rahul@mail.com', '9876543214', 'Window'),
+    -> ('Neha', 'Joshi', 'neha@mail.com', '9876543215', 'Aisle'),
+    -> ('Ankit', 'Mehta', 'ankit@mail.com', '9876543216', 'Window'),
+    -> ('Divya', 'Singh', 'divya@mail.com', '9876543217', 'Aisle'),
+    -> ('Karan', 'Rao', 'karan@mail.com', '9876543218', 'Window'),
+    -> ('Pooja', 'Deshmukh', 'pooja@mail.com', '9876543219', 'Aisle'),
+    -> ('Vikas', 'Kulkarni', 'vikas@mail.com', '9876543220', 'Window'),
+    -> ('Nisha', 'Iyer', 'nisha@mail.com', '9876543221', 'Aisle'),
+    -> ('Rohit', 'Bansal', 'rohit@mail.com', '9876543222', 'Window'),
+    -> ('Anjali', 'Pillai', 'anjali@mail.com', '9876543223', 'Aisle'),
+    -> ('Deepak', 'Mishra', 'deepak@mail.com', '9876543224', 'Window'),
+    -> ('Swati', 'Kale', 'swati@mail.com', '9876543225', 'Aisle'),
+    -> ('Harsh', 'Patel', 'harsh@mail.com', '9876543226', 'Window'),
+    -> ('Tina', 'More', 'tina@mail.com', '9876543227', 'Aisle'),
+    -> ('Sagar', 'Naik', 'sagar@mail.com', '9876543228', 'Window'),
+    -> ('Meera', 'Rana', 'meera@mail.com', '9876543229', 'Aisle');
+Query OK, 20 rows affected (0.01 sec)
+Records: 20  Duplicates: 0  Warnings: 0
+
+mysql> select*from passenger;
++--------------+------------+-----------+-----------------+------------+-----------------+
+| passenger_id | first_name | last_name | email           | phone      | seat_preference |
++--------------+------------+-----------+-----------------+------------+-----------------+
+|            1 | Ravi       | Kumar     | ravi@mail.com   | 9876543210 | Window          |
+|            2 | Sneha      | Patil     | sneha@mail.com  | 9876543211 | Aisle           |
+|            3 | Amit       | Sharma    | amit@mail.com   | 9876543212 | Window          |
+|            4 | Priya      | Verma     | priya@mail.com  | 9876543213 | Aisle           |
+|            5 | Rahul      | Gupta     | rahul@mail.com  | 9876543214 | Window          |
+|            6 | Neha       | Joshi     | neha@mail.com   | 9876543215 | Aisle           |
+|            7 | Ankit      | Mehta     | ankit@mail.com  | 9876543216 | Window          |
+|            8 | Divya      | Singh     | divya@mail.com  | 9876543217 | Aisle           |
+|            9 | Karan      | Rao       | karan@mail.com  | 9876543218 | Window          |
+|           10 | Pooja      | Deshmukh  | pooja@mail.com  | 9876543219 | Aisle           |
+|           11 | Vikas      | Kulkarni  | vikas@mail.com  | 9876543220 | Window          |
+|           12 | Nisha      | Iyer      | nisha@mail.com  | 9876543221 | Aisle           |
+|           13 | Rohit      | Bansal    | rohit@mail.com  | 9876543222 | Window          |
+|           14 | Anjali     | Pillai    | anjali@mail.com | 9876543223 | Aisle           |
+|           15 | Deepak     | Mishra    | deepak@mail.com | 9876543224 | Window          |
+|           16 | Swati      | Kale      | swati@mail.com  | 9876543225 | Aisle           |
+|           17 | Harsh      | Patel     | harsh@mail.com  | 9876543226 | Window          |
+|           18 | Tina       | More      | tina@mail.com   | 9876543227 | Aisle           |
+|           19 | Sagar      | Naik      | sagar@mail.com  | 9876543228 | Window          |
+|           20 | Meera      | Rana      | meera@mail.com  | 9876543229 | Aisle           |
++--------------+------------+-----------+-----------------+------------+-----------------+
+20 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Fare (
+    ->   fare_id INT AUTO_INCREMENT PRIMARY KEY,
+    ->   flight_id INT,
+    ->   seat_class VARCHAR(20),
+    ->   price DECIMAL(10,2),
+    ->   FOREIGN KEY (flight_id) REFERENCES Flight(flight_id)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO Fare (flight_id, seat_class, price) VALUES
+    -> (1, 'Economy', 4500),
+    -> (2, 'Economy', 5000),
+    -> (3, 'Business', 12000),
+    -> (4, 'Economy', 3500),
+    -> (5, 'Economy', 4800),
+    -> (6, 'Business', 14000),
+    -> (7, 'Economy', 4000),
+    -> (8, 'Economy', 3800),
+    -> (9, 'Business', 11000),
+    -> (10, 'Economy', 4200),
+    -> (11, 'Economy', 4700),
+    -> (12, 'Economy', 5100),
+    -> (13, 'Business', 12500),
+    -> (14, 'Economy', 3600),
+    -> (15, 'Economy', 4900),
+    -> (16, 'Business', 14500),
+    -> (17, 'Economy', 4100),
+    -> (18, 'Economy', 3900),
+    -> (19, 'Business', 11500),
+    -> (20, 'Economy', 4300);
+Query OK, 20 rows affected (0.01 sec)
+Records: 20  Duplicates: 0  Warnings: 0
+
+mysql> select*from fare;
++---------+-----------+------------+----------+
+| fare_id | flight_id | seat_class | price    |
++---------+-----------+------------+----------+
+|       1 |         1 | Economy    |  4500.00 |
+|       2 |         2 | Economy    |  5000.00 |
+|       3 |         3 | Business   | 12000.00 |
+|       4 |         4 | Economy    |  3500.00 |
+|       5 |         5 | Economy    |  4800.00 |
+|       6 |         6 | Business   | 14000.00 |
+|       7 |         7 | Economy    |  4000.00 |
+|       8 |         8 | Economy    |  3800.00 |
+|       9 |         9 | Business   | 11000.00 |
+|      10 |        10 | Economy    |  4200.00 |
+|      11 |        11 | Economy    |  4700.00 |
+|      12 |        12 | Economy    |  5100.00 |
+|      13 |        13 | Business   | 12500.00 |
+|      14 |        14 | Economy    |  3600.00 |
+|      15 |        15 | Economy    |  4900.00 |
+|      16 |        16 | Business   | 14500.00 |
+|      17 |        17 | Economy    |  4100.00 |
+|      18 |        18 | Economy    |  3900.00 |
+|      19 |        19 | Business   | 11500.00 |
+|      20 |        20 | Economy    |  4300.00 |
++---------+-----------+------------+----------+
+20 rows in set (0.00 sec)
+mysql> CREATE TABLE Crew (
+    ->   crew_id INT AUTO_INCREMENT PRIMARY KEY,
+    ->   first_name VARCHAR(50),
+    ->   last_name VARCHAR(50),
+    ->   role VARCHAR(30),
+    ->   contact_no VARCHAR(15)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> INSERT INTO Crew (first_name, last_name, role, contact_no) VALUES
+    -> ('Raj', 'Singh', 'Pilot', '9000000001'),
+    -> ('Anita', 'Reddy', 'Co-Pilot', '9000000002'),
+    -> ('Manish', 'Bora', 'Flight Attendant', '9000000003'),
+    -> ('Ritu', 'Sharma', 'Flight Attendant', '9000000004'),
+    -> ('Suresh', 'Yadav', 'Pilot', '9000000005'),
+    -> ('Komal', 'Naik', 'Co-Pilot', '9000000006'),
+    -> ('Arjun', 'Das', 'Attendant', '9000000007'),
+    -> ('Meena', 'Patel', 'Attendant', '9000000008'),
+    -> ('Kunal', 'Ghosh', 'Pilot', '9000000009'),
+    -> ('Tina', 'Roy', 'Co-Pilot', '9000000010'),
+    -> ('Vijay', 'Singhania', 'Pilot', '9000000011'),
+    -> ('Nina', 'Paul', 'Attendant', '9000000012'),
+    -> ('Kishor', 'Patel', 'Co-Pilot', '9000000013'),
+    -> ('Gauri', 'Bose', 'Attendant', '9000000014'),
+    -> ('Ramesh', 'Kumar', 'Pilot', '9000000015'),
+    -> ('Sonia', 'Desai', 'Co-Pilot', '9000000016'),
+    -> ('Arti', 'Chopra', 'Attendant', '9000000017'),
+    -> ('Pankaj', 'Gill', 'Pilot', '9000000018'),
+    -> ('Preeti', 'Nair', 'Attendant', '9000000019'),
+    -> ('Sameer', 'Rao', 'Co-Pilot', '9000000020');
+Query OK, 20 rows affected (0.01 sec)
+Records: 20  Duplicates: 0  Warnings: 0
+
+mysql> select*from crew;
++---------+------------+-----------+------------------+------------+
+| crew_id | first_name | last_name | role             | contact_no |
++---------+------------+-----------+------------------+------------+
+|       1 | Raj        | Singh     | Pilot            | 9000000001 |
+|       2 | Anita      | Reddy     | Co-Pilot         | 9000000002 |
+|       3 | Manish     | Bora      | Flight Attendant | 9000000003 |
+|       4 | Ritu       | Sharma    | Flight Attendant | 9000000004 |
+|       5 | Suresh     | Yadav     | Pilot            | 9000000005 |
+|       6 | Komal      | Naik      | Co-Pilot         | 9000000006 |
+|       7 | Arjun      | Das       | Attendant        | 9000000007 |
+|       8 | Meena      | Patel     | Attendant        | 9000000008 |
+|       9 | Kunal      | Ghosh     | Pilot            | 9000000009 |
+|      10 | Tina       | Roy       | Co-Pilot         | 9000000010 |
+|      11 | Vijay      | Singhania | Pilot            | 9000000011 |
+|      12 | Nina       | Paul      | Attendant        | 9000000012 |
+|      13 | Kishor     | Patel     | Co-Pilot         | 9000000013 |
+|      14 | Gauri      | Bose      | Attendant        | 9000000014 |
+|      15 | Ramesh     | Kumar     | Pilot            | 9000000015 |
+|      16 | Sonia      | Desai     | Co-Pilot         | 9000000016 |
+|      17 | Arti       | Chopra    | Attendant        | 9000000017 |
+|      18 | Pankaj     | Gill      | Pilot            | 9000000018 |
+|      19 | Preeti     | Nair      | Attendant        | 9000000019 |
+|      20 | Sameer     | Rao       | Co-Pilot         | 9000000020 |
++---------+------------+-----------+------------------+------------+
+20 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Flight_Crew (
+    ->   flight_id INT,
+    ->   crew_id INT,
+    ->   PRIMARY KEY (flight_id, crew_id),
+    ->   FOREIGN KEY (flight_id) REFERENCES Flight(flight_id),
+    ->   FOREIGN KEY (crew_id) REFERENCES Crew(crew_id)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO Flight_Crew VALUES
+    -> (1,1),(1,2),(1,3),(2,4),(3,5),
+    -> (4,6),(5,7),(6,8),(7,9),(8,10),
+    -> (9,11),(10,12),(11,13),(12,14),(13,15),
+    -> (14,16),(15,17),(16,18),(17,19),(18,20);
+Query OK, 20 rows affected (0.01 sec)
+Records: 20  Duplicates: 0  Warnings: 0
+
+mysql> select*from flight_crew;
++-----------+---------+
+| flight_id | crew_id |
++-----------+---------+
+|         1 |       1 |
+|         1 |       2 |
+|         1 |       3 |
+|         2 |       4 |
+|         3 |       5 |
+|         4 |       6 |
+|         5 |       7 |
+|         6 |       8 |
+|         7 |       9 |
+|         8 |      10 |
+|         9 |      11 |
+|        10 |      12 |
+|        11 |      13 |
+|        12 |      14 |
+|        13 |      15 |
+|        14 |      16 |
+|        15 |      17 |
+|        16 |      18 |
+|        17 |      19 |
+|        18 |      20 |
++-----------+---------+
+20 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Itinerary (
+    ->   itinerary_id INT AUTO_INCREMENT PRIMARY KEY,
+    ->   passenger_id INT,
+    ->   booking_id INT,
+    ->   total_flights INT,
+    ->   total_cost DECIMAL(10,2),
+    ->   FOREIGN KEY (passenger_id) REFERENCES Passenger(passenger_id),
+    ->   FOREIGN KEY (booking_id) REFERENCES Booking(booking_id)
+    -> );
+ERROR 1824 (HY000): Failed to open the referenced table 'booking'
+mysql> CREATE TABLE Booking (
+    ->   booking_id INT AUTO_INCREMENT PRIMARY KEY,
+    ->   passenger_id INT,
+    ->   flight_id INT,
+    ->   fare_id INT,
+    ->   booking_date DATE,
+    ->   status VARCHAR(20),
+    ->   payment_status VARCHAR(20),
+    ->   FOREIGN KEY (passenger_id) REFERENCES Passenger(passenger_id),
+    ->   FOREIGN KEY (flight_id) REFERENCES Flight(flight_id),
+    ->   FOREIGN KEY (fare_id) REFERENCES Fare(fare_id)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> INSERT INTO Booking (passenger_id, flight_id, fare_id, booking_date, status, payment_status) VALUES
+    -> (1,1,1,'2025-10-01','Confirmed','Paid'),
+    -> (2,2,2,'2025-10-02','Confirmed','Paid'),
+    -> (3,3,3,'2025-10-03','Pending','Unpaid'),
+    -> (4,4,4,'2025-10-04','Cancelled','Refunded'),
+    -> (5,5,5,'2025-10-05','Confirmed','Paid'),
+    -> (6,6,6,'2025-10-06','Confirmed','Paid'),
+    -> (7,7,7,'2025-10-07','Pending','Unpaid'),
+    -> (8,8,8,'2025-10-08','Confirmed','Paid'),
+    -> (9,9,9,'2025-10-09','Cancelled','Refunded'),
+    -> (10,10,10,'2025-10-10','Confirmed','Paid'),
+    -> (11,11,11,'2025-10-11','Confirmed','Paid'),
+    -> (12,12,12,'2025-10-12','Pending','Unpaid'),
+    -> (13,13,13,'2025-10-13','Confirmed','Paid'),
+    -> (14,14,14,'2025-10-14','Cancelled','Refunded'),
+    -> (15,15,15,'2025-10-15','Confirmed','Paid'),
+    -> (16,16,16,'2025-10-16','Pending','Unpaid'),
+    -> (17,17,17,'2025-10-17','Confirmed','Paid'),
+    -> (18,18,18,'2025-10-18','Confirmed','Paid'),
+    -> (19,19,19,'2025-10-19','Pending','Unpaid'),
+    -> (20,20,20,'2025-10-20','Confirmed','Paid');
+Query OK, 20 rows affected (0.01 sec)
+Records: 20  Duplicates: 0  Warnings: 0
+
+mysql> select*from booking;
++------------+--------------+-----------+---------+--------------+-----------+----------------+
+| booking_id | passenger_id | flight_id | fare_id | booking_date | status    | payment_status |
++------------+--------------+-----------+---------+--------------+-----------+----------------+
+|          1 |            1 |         1 |       1 | 2025-10-01   | Confirmed | Paid           |
+|          2 |            2 |         2 |       2 | 2025-10-02   | Confirmed | Paid           |
+|          3 |            3 |         3 |       3 | 2025-10-03   | Pending   | Unpaid         |
+|          4 |            4 |         4 |       4 | 2025-10-04   | Cancelled | Refunded       |
+|          5 |            5 |         5 |       5 | 2025-10-05   | Confirmed | Paid           |
+|          6 |            6 |         6 |       6 | 2025-10-06   | Confirmed | Paid           |
+|          7 |            7 |         7 |       7 | 2025-10-07   | Pending   | Unpaid         |
+|          8 |            8 |         8 |       8 | 2025-10-08   | Confirmed | Paid           |
+|          9 |            9 |         9 |       9 | 2025-10-09   | Cancelled | Refunded       |
+|         10 |           10 |        10 |      10 | 2025-10-10   | Confirmed | Paid           |
+|         11 |           11 |        11 |      11 | 2025-10-11   | Confirmed | Paid           |
+|         12 |           12 |        12 |      12 | 2025-10-12   | Pending   | Unpaid         |
+|         13 |           13 |        13 |      13 | 2025-10-13   | Confirmed | Paid           |
+|         14 |           14 |        14 |      14 | 2025-10-14   | Cancelled | Refunded       |
+|         15 |           15 |        15 |      15 | 2025-10-15   | Confirmed | Paid           |
+|         16 |           16 |        16 |      16 | 2025-10-16   | Pending   | Unpaid         |
+|         17 |           17 |        17 |      17 | 2025-10-17   | Confirmed | Paid           |
+|         18 |           18 |        18 |      18 | 2025-10-18   | Confirmed | Paid           |
+|         19 |           19 |        19 |      19 | 2025-10-19   | Pending   | Unpaid         |
+|         20 |           20 |        20 |      20 | 2025-10-20   | Confirmed | Paid           |
++------------+--------------+-----------+---------+--------------+-----------+----------------+
+20 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Itinerary (
+    ->   itinerary_id INT AUTO_INCREMENT PRIMARY KEY,
+    ->   passenger_id INT,
+    ->   booking_id INT,
+    ->   total_flights INT,
+    ->   total_cost DECIMAL(10,2),
+    ->   FOREIGN KEY (passenger_id) REFERENCES Passenger(passenger_id),
+    ->   FOREIGN KEY (booking_id) REFERENCES Booking(booking_id)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> INSERT INTO Itinerary (passenger_id, booking_id, total_flights, total_cost) VALUES
+    -> (1,1,1,4500.00),
+    -> (2,2,1,5000.00),
+    -> (3,3,1,12000.00),
+    -> (4,4,1,3500.00),
+    -> (5,5,1,4800.00),
+    -> (6,6,1,14000.00),
+    -> (7,7,1,4000.00),
+    -> (8,8,1,3800.00),
+    -> (9,9,1,11000.00),
+    -> (10,10,1,4200.00),
+    -> (11,11,1,4700.00),
+    -> (12,12,1,5100.00),
+    -> (13,13,1,12500.00),
+    -> (14,14,1,3600.00),
+    -> (15,15,1,4900.00),
+    -> (16,16,1,14500.00),
+    -> (17,17,1,4100.00),
+    -> (18,18,1,3900.00),
+    -> (19,19,1,11500.00),
+    -> (20,20,1,4300.00);
+Query OK, 20 rows affected (0.01 sec)
+Records: 20  Duplicates: 0  Warnings: 0
+
+mysql> select *from itinerary;
++--------------+--------------+------------+---------------+------------+
+| itinerary_id | passenger_id | booking_id | total_flights | total_cost |
++--------------+--------------+------------+---------------+------------+
+|            1 |            1 |          1 |             1 |    4500.00 |
+|            2 |            2 |          2 |             1 |    5000.00 |
+|            3 |            3 |          3 |             1 |   12000.00 |
+|            4 |            4 |          4 |             1 |    3500.00 |
+|            5 |            5 |          5 |             1 |    4800.00 |
+|            6 |            6 |          6 |             1 |   14000.00 |
+|            7 |            7 |          7 |             1 |    4000.00 |
+|            8 |            8 |          8 |             1 |    3800.00 |
+|            9 |            9 |          9 |             1 |   11000.00 |
+|           10 |           10 |         10 |             1 |    4200.00 |
+|           11 |           11 |         11 |             1 |    4700.00 |
+|           12 |           12 |         12 |             1 |    5100.00 |
+|           13 |           13 |         13 |             1 |   12500.00 |
+|           14 |           14 |         14 |             1 |    3600.00 |
+|           15 |           15 |         15 |             1 |    4900.00 |
+|           16 |           16 |         16 |             1 |   14500.00 |
+|           17 |           17 |         17 |             1 |    4100.00 |
+|           18 |           18 |         18 |             1 |    3900.00 |
+|           19 |           19 |         19 |             1 |   11500.00 |
+|           20 |           20 |         20 |             1 |    4300.00 |
++--------------+--------------+------------+---------------+------------+
+20 rows in set (0.00 sec)
+
+mysql>

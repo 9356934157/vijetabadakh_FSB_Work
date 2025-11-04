@@ -1,0 +1,13 @@
+create procedure updateSalary(nm varchar(20))
+    -> begin
+    -> declare sal int;
+    -> select salary into sal from employees
+    -> where first_name=nm;
+    -> if(sal>= 25000)then
+    -> update employees set salary=salary*1.1
+    -> where first_name=nm;
+    -> else
+    -> update employees set salary=salary*1.2
+    -> where first_name=nm;
+    -> end if;
+    -> end#;
